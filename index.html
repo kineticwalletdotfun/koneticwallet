@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KINETIC WALLET</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --fg: #e8e4dc;
+    --accent: #c8ff00;
+    --accent2: #00ffc8;
+    --muted: #3a3a3a;
+    --mid: #888880;
+    --border: #1e1e1e;
+    --red: #ff3b30;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    overflow-x: hidden;
+    cursor: crosshair;
+  }
+
+  ::selection { background: var(--accent); color: #000; }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--muted); }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.3;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 18px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(12px);
+  }
+
+  .nav-logo {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: var(--fg);
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--accent); }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--mid);
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  .nav-cta {
+    background: var(--accent);
+    color: #000;
+    padding: 8px 20px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    border: none;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .nav-cta:hover { background: #fff; }
+
+  /* TICKER */
+  .ticker {
+    position: fixed;
+    top: 57px;
+    left: 0;
+    right: 0;
+    z-index: 99;
+    background: var(--accent);
+    color: #000;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    padding: 5px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .ticker-inner {
+    display: inline-flex;
+    gap: 0;
+    animation: ticker 28s linear infinite;
+  }
+
+  .ticker-item {
+    padding: 0 24px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .ticker-dot { width: 4px; height: 4px; background: #000; display: inline-block; }
+
+  @keyframes ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    padding: 160px 48px 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    position: relative;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0;
+    width: 1px;
+    background: var(--border);
+  }
+
+  .hero-left {
+    padding-right: 48px;
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .hero-tag {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .hero-tag::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+    display: inline-block;
+  }
+
+  .hero-title {
+    font-size: clamp(52px, 7vw, 88px);
+    font-weight: 700;
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+    margin-bottom: 40px;
+    text-transform: uppercase;
+  }
+
+  .hero-title .line-accent { color: var(--accent); }
+  .hero-title .line-outline {
+    -webkit-text-stroke: 1px var(--fg);
+    color: transparent;
+  }
+
+  .hero-desc {
+    font-size: 12px;
+    color: var(--mid);
+    line-height: 1.8;
+    max-width: 480px;
+    margin-bottom: 48px;
+    letter-spacing: 0.05em;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #000;
+    padding: 14px 32px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.15s;
+    position: relative;
+  }
+
+  .btn-primary::after {
+    content: '↗';
+    margin-left: 8px;
+  }
+
+  .btn-primary:hover { background: var(--accent2); }
+
+  .btn-ghost {
+    border: 1px solid var(--muted);
+    color: var(--mid);
+    padding: 14px 32px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.15s;
+    background: transparent;
+  }
+
+  .btn-ghost:hover { border-color: var(--fg); color: var(--fg); }
+
+  .hero-right {
+    padding-left: 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+  }
+
+  /* TERMINAL CARD */
+  .terminal {
+    background: #0f0f0f;
+    border: 1px solid var(--border);
+    padding: 0;
+    position: relative;
+    animation: fadeUp 0.8s ease 0.3s both;
+  }
+
+  .terminal-bar {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #111;
+  }
+
+  .terminal-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+  }
+
+  .d1 { background: var(--red); }
+  .d2 { background: #ff9f0a; }
+  .d3 { background: var(--accent); }
+
+  .terminal-title {
+    font-size: 10px;
+    color: var(--mid);
+    letter-spacing: 0.15em;
+    margin-left: 8px;
+  }
+
+  .terminal-body {
+    padding: 24px;
+    font-size: 12px;
+    line-height: 1.8;
+  }
+
+  .t-line { display: flex; gap: 8px; align-items: flex-start; }
+  .t-prompt { color: var(--accent); flex-shrink: 0; }
+  .t-cmd { color: var(--fg); }
+  .t-output { color: var(--mid); padding-left: 16px; }
+  .t-value { color: var(--accent2); }
+  .t-blank { height: 8px; }
+
+  .blink {
+    display: inline-block;
+    width: 7px;
+    height: 13px;
+    background: var(--accent);
+    vertical-align: middle;
+    animation: blink 1s step-end infinite;
+  }
+
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+  /* STATS ROW */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .stat-item {
+    padding: 32px 48px;
+    border-right: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    transition: background 0.2s;
+  }
+
+  .stat-item:last-child { border-right: none; }
+  .stat-item:hover { background: #0f0f0f; }
+
+  .stat-label {
+    font-size: 10px;
+    color: var(--mid);
+    letter-spacing: 0.2em;
+    margin-bottom: 12px;
+  }
+
+  .stat-value {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--fg);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .stat-value span { color: var(--accent); }
+
+  .stat-sub {
+    font-size: 10px;
+    color: var(--mid);
+    letter-spacing: 0.1em;
+  }
+
+  /* SECTION */
+  section { border-bottom: 1px solid var(--border); }
+
+  .section-header {
+    padding: 32px 48px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--mid);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::before {
+    content: '├──';
+    color: var(--muted);
+  }
+
+  .section-num {
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+
+  /* FEATURES */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .feature-card {
+    padding: 48px;
+    border-right: 1px solid var(--border);
+    position: relative;
+    transition: background 0.2s;
+    overflow: hidden;
+  }
+
+  .feature-card:last-child { border-right: none; }
+  .feature-card:nth-child(3) { border-right: none; }
+  .feature-card:nth-child(4),
+  .feature-card:nth-child(5),
+  .feature-card:nth-child(6) {
+    border-top: 1px solid var(--border);
+  }
+  .feature-card:nth-child(6) { border-right: none; }
+
+  .feature-card:hover { background: #0d0d0d; }
+
+  .feature-card:hover .feature-icon {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .feature-num {
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.2em;
+    margin-bottom: 24px;
+  }
+
+  .feature-icon {
+    width: 48px;
+    height: 48px;
+    border: 1px solid var(--muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    margin-bottom: 24px;
+    transition: all 0.2s;
+  }
+
+  .feature-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    color: var(--fg);
+  }
+
+  .feature-tag {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 2px 8px;
+    display: inline-block;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+
+  .feature-desc {
+    font-size: 11px;
+    color: var(--mid);
+    line-height: 1.8;
+  }
+
+  /* HOW IT WORKS */
+  .how-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .how-left {
+    padding: 64px 48px;
+    border-right: 1px solid var(--border);
+  }
+
+  .how-title {
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 700;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+
+  .how-title .ac { color: var(--accent); }
+
+  .how-desc {
+    font-size: 12px;
+    color: var(--mid);
+    line-height: 1.9;
+    margin-bottom: 40px;
+  }
+
+  .how-right {
+    padding: 64px 48px;
+  }
+
+  .step-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .step-item {
+    display: flex;
+    gap: 24px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    transition: padding-left 0.2s;
+    cursor: default;
+  }
+
+  .step-item:last-child { border-bottom: none; }
+  .step-item:hover { padding-left: 12px; }
+  .step-item:hover .step-num { color: var(--accent); }
+
+  .step-num {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+    flex-shrink: 0;
+    padding-top: 2px;
+    transition: color 0.2s;
+    width: 28px;
+  }
+
+  .step-content { flex: 1; }
+
+  .step-title {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .step-desc {
+    font-size: 11px;
+    color: var(--mid);
+    line-height: 1.7;
+  }
+
+  /* CHAINS */
+  .chains-section {
+    padding: 64px 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+  }
+
+  .chain-card {
+    padding: 32px;
+    border: 1px solid var(--border);
+    margin: 8px;
+    position: relative;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+
+  .chain-card:hover {
+    border-color: var(--accent);
+    background: #0f0f0f;
+  }
+
+  .chain-name {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .chain-type {
+    font-size: 10px;
+    color: var(--mid);
+    letter-spacing: 0.15em;
+    margin-bottom: 16px;
+  }
+
+  .chain-addr {
+    font-size: 10px;
+    color: var(--accent2);
+    letter-spacing: 0.05em;
+    word-break: break-all;
+  }
+
+  .chain-status {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2s ease infinite;
+  }
+
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+  }
+
+  /* BIG CTA */
+  .big-cta {
+    padding: 120px 48px;
+    text-align: center;
+    position: relative;
+    background: #050505;
+    overflow: hidden;
+  }
+
+  .big-cta::before {
+    content: 'KINETIC';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: clamp(80px, 18vw, 240px);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    color: transparent;
+    -webkit-text-stroke: 1px #1a1a1a;
+    pointer-events: none;
+    white-space: nowrap;
+    z-index: 0;
+  }
+
+  .big-cta-content { position: relative; z-index: 1; }
+
+  .big-cta-label {
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    color: var(--accent);
+    margin-bottom: 24px;
+  }
+
+  .big-cta-title {
+    font-size: clamp(32px, 5vw, 64px);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+    line-height: 1.1;
+  }
+
+  .big-cta-sub {
+    font-size: 12px;
+    color: var(--mid);
+    margin-bottom: 48px;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.8;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 32px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .footer-left {
+    font-size: 11px;
+    color: var(--mid);
+    letter-spacing: 0.1em;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-size: 10px;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.15em;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--accent); }
+
+  .footer-address {
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .addr-chip {
+    border: 1px solid var(--border);
+    padding: 4px 10px;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .addr-chip span:first-child {
+    color: var(--mid);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+  }
+
+  .addr-chip span:last-child {
+    color: var(--accent2);
+    font-size: 10px;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-up { animation: fadeUp 0.7s ease both; }
+  .fade-up-2 { animation: fadeUp 0.7s ease 0.15s both; }
+  .fade-up-3 { animation: fadeUp 0.7s ease 0.3s both; }
+  .fade-up-4 { animation: fadeUp 0.7s ease 0.45s both; }
+
+  /* SCAN LINE */
+  .scan-line {
+    position: fixed;
+    left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(200,255,0,0.15), transparent);
+    pointer-events: none;
+    z-index: 9998;
+    animation: scan 8s linear infinite;
+  }
+
+  @keyframes scan {
+    0% { top: -2px; }
+    100% { top: 100vh; }
+  }
+
+  /* MOBILE */
+  @media (max-width: 900px) {
+    nav { padding: 14px 20px; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; padding: 140px 20px 60px; }
+    .hero-left { border-right: none; padding-right: 0; }
+    .hero-right { padding-left: 0; padding-top: 40px; }
+    .stats-row { grid-template-columns: 1fr 1fr; }
+    .stat-item { padding: 24px 20px; }
+    .features-grid { grid-template-columns: 1fr; }
+    .feature-card { border-right: none !important; border-top: 1px solid var(--border) !important; }
+    .feature-card:first-child { border-top: none !important; }
+    .how-grid { grid-template-columns: 1fr; }
+    .how-left { border-right: none; }
+    .chains-section { grid-template-columns: 1fr; padding: 32px 20px; }
+    .section-header, .how-left, .how-right { padding: 40px 20px; }
+    footer { padding: 24px 20px; flex-direction: column; align-items: flex-start; }
+    .big-cta { padding: 80px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="scan-line"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">⚡ KINETIC<span>WALLET</span></a>
+  <ul class="nav-links">
+    <li><a href="#features">FEATURES</a></li>
+    <li><a href="#how">HOW IT WORKS</a></li>
+    <li><a href="#chains">NETWORKS</a></li>
+    <li><a href="#docs">DOCS</a></li>
+  </ul>
+  <button class="nav-cta">LAUNCH_APP</button>
+</nav>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="ticker-item"><span class="ticker-dot"></span> INSTANT SETTLEMENT</span>
+    <span class="ticker-item"><span class="ticker-dot"></span> MULTICHAIN SUPPORT</span>
+    <span class="ticker-item"><span class="ticker-dot"></span> ZERO GAS BRIDGING</span>
+    <span class="ticker-item"><span class="ticker-dot"></span> NON-CUSTODIAL</span>
+    <span class="ticker-item"><span class="ticker-dot"></span> OPEN SOURCE</span>
+    <span class="ticker-item"><span class="ticker-dot"></span> 256-BIT ENCRYPTION</span>
+    <span class="ticker-item"><span class="ticker-dot"></span> INSTANT SETTLEMENT</span>
+    <span class="ticker-item"><span class="ticker-dot"></span> MULTICHAIN SUPPORT</span>
+    <span class="ticker-item"><span class="ticker-dot"></span> ZERO GAS BRIDGING</span>
+    <span class="ticker-item"><span class="ticker-dot"></span> NON-CUSTODIAL</span>
+    <span class="ticker-item"><span class="ticker-dot"></span> OPEN SOURCE</span>
+    <span class="ticker-item"><span class="ticker-dot"></span> 256-BIT ENCRYPTION</span>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-tag fade-up">V1.0 · NOW LIVE</div>
+    <h1 class="hero-title fade-up-2">
+      THE<br>
+      <span class="line-accent">KINETIC</span><br>
+      <span class="line-outline">WALLET</span><br>
+      SYSTEM.
+    </h1>
+    <p class="hero-desc fade-up-3">
+      GIVE YOUR ASSETS VELOCITY. KINETIC IS A NON-CUSTODIAL MULTICHAIN WALLET BUILT FOR SPEED, SECURITY, AND SEAMLESS CROSS-CHAIN SETTLEMENT — WITHOUT COMPROMISE.
+    </p>
+    <div class="hero-actions fade-up-4">
+      <a href="#" class="btn-primary">GET_STARTED</a>
+      <a href="#" class="btn-ghost">VIEW_DOCS</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="terminal fade-up-3">
+      <div class="terminal-bar">
+        <div class="terminal-dot d1"></div>
+        <div class="terminal-dot d2"></div>
+        <div class="terminal-dot d3"></div>
+        <span class="terminal-title">KINETIC_WALLET · SESSION_ACTIVE</span>
+      </div>
+      <div class="terminal-body">
+        <div class="t-line"><span class="t-prompt">$</span><span class="t-cmd">kinetic init --wallet primary</span></div>
+        <div class="t-output">✓ Wallet initialized · Entropy: <span class="t-value">256bit</span></div>
+        <div class="t-blank"></div>
+        <div class="t-line"><span class="t-prompt">$</span><span class="t-cmd">kinetic balance --all-chains</span></div>
+        <div class="t-output">ETH  ·· <span class="t-value">2.4180 ETH</span>  · $<span class="t-value">8,241.60</span></div>
+        <div class="t-output">BTC  ·· <span class="t-value">0.0821 BTC</span>  · $<span class="t-value">5,640.00</span></div>
+        <div class="t-output">SOL  ·· <span class="t-value">48.200 SOL</span>  · $<span class="t-value">7,920.00</span></div>
+        <div class="t-output">USDC ·· <span class="t-value">1,200.00</span>   · $<span class="t-value">1,200.00</span></div>
+        <div class="t-blank"></div>
+        <div class="t-output">TOTAL_PORTFOLIO: <span class="t-value">$23,001.60</span> ↑ +4.2%</div>
+        <div class="t-blank"></div>
+        <div class="t-line"><span class="t-prompt">$</span><span class="t-cmd">kinetic send --to 0x4f2a... --amt 0.5eth</span></div>
+        <div class="t-output">⚡ TX_BROADCAST · gas: <span class="t-value">21000</span> · fee: <span class="t-value">$0.42</span></div>
+        <div class="t-output">✓ CONFIRMED in <span class="t-value">2.1s</span> · block: <span class="t-value">#21,004,819</span></div>
+        <div class="t-blank"></div>
+        <div class="t-line"><span class="t-prompt">$</span><span class="t-cmd"><span class="blink"></span></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-row">
+  <div class="stat-item">
+    <div class="stat-label">TOTAL VOLUME</div>
+    <div class="stat-value">$4.<span>8B</span></div>
+    <div class="stat-sub">PROCESSED THIS MONTH</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-label">ACTIVE WALLETS</div>
+    <div class="stat-value">218<span>K</span></div>
+    <div class="stat-sub">GLOBALLY ACTIVE</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-label">AVG SETTLEMENT</div>
+    <div class="stat-value">1.<span>8S</span></div>
+    <div class="stat-sub">CROSS-CHAIN SPEED</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-label">NETWORKS</div>
+    <div class="stat-value">16<span>+</span></div>
+    <div class="stat-sub">CHAINS SUPPORTED</div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="section-header">
+    <span class="section-label">CORE_FEATURES</span>
+    <span class="section-num">01 / 04</span>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-num">01</div>
+      <div class="feature-icon">⚡</div>
+      <div class="feature-tag">SETTLEMENT</div>
+      <div class="feature-title">INSTANT TRANSFERS</div>
+      <p class="feature-desc">SUB-2 SECOND TRANSACTION FINALITY ACROSS ALL SUPPORTED CHAINS. NO WAITING. NO UNCERTAINTY. PURE VELOCITY FOR YOUR ASSETS.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-num">02</div>
+      <div class="feature-icon">🔐</div>
+      <div class="feature-tag">SECURITY</div>
+      <div class="feature-title">NON-CUSTODIAL VAULT</div>
+      <p class="feature-desc">YOUR KEYS, YOUR COINS. 256-BIT ENCRYPTED LOCAL KEY STORAGE WITH OPTIONAL HARDWARE WALLET INTEGRATION AND BIOMETRIC AUTH.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-num">03</div>
+      <div class="feature-icon">🔗</div>
+      <div class="feature-tag">MULTICHAIN</div>
+      <div class="feature-title">CROSS-CHAIN BRIDGE</div>
+      <p class="feature-desc">BRIDGE ASSETS ACROSS ETH, SOL, BASE, AND 13+ NETWORKS IN SINGLE CLICK. OPTIMIZED ROUTING FOR MINIMUM SLIPPAGE AND FEES.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-num">04</div>
+      <div class="feature-icon">📊</div>
+      <div class="feature-tag">ANALYTICS</div>
+      <div class="feature-title">PORTFOLIO TRACKER</div>
+      <p class="feature-desc">REAL-TIME PNL, HISTORICAL CHARTS, TAX REPORTING, AND YIELD TRACKING — ALL IN ONE UNIFIED DASHBOARD WITH EXPORT CAPABILITY.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-num">05</div>
+      <div class="feature-icon">🤖</div>
+      <div class="feature-tag">AUTOMATION</div>
+      <div class="feature-title">SMART ROUTINES</div>
+      <p class="feature-desc">SCHEDULE RECURRING TRANSFERS, AUTO-COMPOUND YIELDS, SET PRICE ALERTS, AND TRIGGER DCA STRATEGIES WITHOUT MANUAL INPUT.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-num">06</div>
+      <div class="feature-icon">⚙️</div>
+      <div class="feature-tag">DEVELOPER</div>
+      <div class="feature-title">OPEN SDK + API</div>
+      <p class="feature-desc">INTEGRATE KINETIC INTO YOUR DAPP WITH OUR OPEN-SOURCE SDK. REST API, WEBHOOKS, AND WEB3.JS COMPATIBLE. MIT LICENSED.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="section-header">
+    <span class="section-label">HOW_IT_WORKS</span>
+    <span class="section-num">02 / 04</span>
+  </div>
+  <div class="how-grid">
+    <div class="how-left">
+      <h2 class="how-title">
+        ASSETS IN<br>
+        <span class="ac">MOTION.</span><br>
+        ALWAYS.
+      </h2>
+      <p class="how-desc">
+        KINETIC IS ENGINEERED AROUND A SINGLE PRINCIPLE: YOUR WEALTH SHOULD MOVE AS FAST AS YOU THINK. FROM SETUP TO SETTLEMENT, EVERY STEP IS OPTIMIZED FOR SPEED AND PRECISION.<br><br>
+        UNDER THE HOOD, KINETIC USES A PROPRIETARY ROUTING ENGINE THAT FINDS THE FASTEST AND CHEAPEST PATH FOR EVERY TRANSACTION — AUTOMATICALLY.
+      </p>
+      <a href="#" class="btn-primary">READ_WHITEPAPER</a>
+    </div>
+    <div class="how-right">
+      <div class="step-list">
+        <div class="step-item">
+          <div class="step-num">01</div>
+          <div class="step-content">
+            <div class="step-title">CREATE YOUR WALLET</div>
+            <p class="step-desc">GENERATE A SECURE NON-CUSTODIAL WALLET IN UNDER 60 SECONDS. YOUR SEED PHRASE IS ENCRYPTED LOCALLY — NEVER LEAVES YOUR DEVICE.</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">02</div>
+          <div class="step-content">
+            <div class="step-title">CONNECT YOUR ASSETS</div>
+            <p class="step-desc">IMPORT EXISTING WALLETS OR FUND VIA FIAT ON-RAMP. SUPPORTS ETH, BTC, SOL, BASE, AVAX, POLYGON AND 12 MORE NETWORKS.</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">03</div>
+          <div class="step-content">
+            <div class="step-title">CONFIGURE ROUTING</div>
+            <p class="step-desc">SET YOUR PREFERRED GAS TOLERANCE, SLIPPAGE LIMITS, AND AUTO-ROUTING PREFERENCES. THE ENGINE HANDLES THE REST.</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">04</div>
+          <div class="step-content">
+            <div class="step-title">TRANSACT AT VELOCITY</div>
+            <p class="step-desc">SEND, RECEIVE, SWAP, AND BRIDGE AT KINETIC SPEED. EVERY TRANSACTION CONFIRMED IN UNDER 2 SECONDS WITH FULL ON-CHAIN PROOF.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NETWORKS -->
+<section id="chains">
+  <div class="section-header">
+    <span class="section-label">SUPPORTED_NETWORKS</span>
+    <span class="section-num">03 / 04</span>
+  </div>
+  <div class="chains-section">
+    <div class="chain-card">
+      <div class="chain-status"></div>
+      <div class="chain-name">ETHEREUM</div>
+      <div class="chain-type">EVM · ERC-20 / ERC-721</div>
+      <div class="chain-addr">0x1a2b...3c4d · MAINNET LIVE</div>
+    </div>
+    <div class="chain-card">
+      <div class="chain-status"></div>
+      <div class="chain-name">SOLANA</div>
+      <div class="chain-type">SPL · MAINNET-BETA</div>
+      <div class="chain-addr">7xKtR...pump · LIVE</div>
+    </div>
+    <div class="chain-card">
+      <div class="chain-status"></div>
+      <div class="chain-name">BASE</div>
+      <div class="chain-type">L2 · EVM COMPATIBLE</div>
+      <div class="chain-addr">0x4f2a...e811 · MAINNET LIVE</div>
+    </div>
+    <div class="chain-card">
+      <div class="chain-status"></div>
+      <div class="chain-name">BITCOIN</div>
+      <div class="chain-type">UTXO · NATIVE + TAPROOT</div>
+      <div class="chain-addr">bc1q...zx9w · MAINNET LIVE</div>
+    </div>
+    <div class="chain-card">
+      <div class="chain-status"></div>
+      <div class="chain-name">AVALANCHE</div>
+      <div class="chain-type">C-CHAIN · EVM</div>
+      <div class="chain-addr">0x9d1c...f203 · MAINNET LIVE</div>
+    </div>
+    <div class="chain-card">
+      <div class="chain-status" style="background:var(--accent2)"></div>
+      <div class="chain-name">POLYGON</div>
+      <div class="chain-type">POS · EVM COMPATIBLE</div>
+      <div class="chain-addr">0x2b8e...a104 · MAINNET LIVE</div>
+    </div>
+  </div>
+</section>
+
+<!-- BIG CTA -->
+<section class="big-cta" id="docs">
+  <div class="big-cta-content">
+    <div class="big-cta-label">★ READY TO LAUNCH</div>
+    <h2 class="big-cta-title">
+      PUT YOUR<br>ASSETS IN<br>MOTION.
+    </h2>
+    <p class="big-cta-sub">
+      START WITH THE APP. ADD AUTOMATION, ANALYTICS, AND CROSS-CHAIN ROUTING AS YOUR PORTFOLIO GROWS.
+    </p>
+    <div class="cta-buttons">
+      <a href="#" class="btn-primary">LAUNCH_APP</a>
+      <a href="#" class="btn-ghost">VIEW_GITHUB</a>
+      <a href="#" class="btn-ghost">JOIN_DISCORD</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">
+    ⚡ KINETIC WALLET · © 2026 · MIT LICENSE · OPEN SOURCE
+  </div>
+  <ul class="footer-links">
+    <li><a href="#">DOCS</a></li>
+    <li><a href="#">GITHUB</a></li>
+    <li><a href="#">TWITTER</a></li>
+    <li><a href="#">DISCORD</a></li>
+    <li><a href="#">SECURITY</a></li>
+  </ul>
+  <div class="footer-address">
+    <div class="addr-chip"><span>ETH</span><span>0x1a2b...3c4d</span></div>
+    <div class="addr-chip"><span>SOL</span><span>7xKtR...pump</span></div>
+  </div>
+</footer>
+
+<script>
+  // Subtle parallax on hero title
+  document.addEventListener('mousemove', (e) => {
+    const x = (e.clientX / window.innerWidth - 0.5) * 12;
+    const y = (e.clientY / window.innerHeight - 0.5) * 8;
+    const title = document.querySelector('.hero-title');
+    if (title) {
+      title.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+    }
+  });
+
+  // Intersection observer for fade-in on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.feature-card, .step-item, .chain-card, .stat-item').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(16px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+  });
+
+  // Animated counter for stats
+  const animateCounter = (el, target, suffix) => {
+    let start = 0;
+    const duration = 1800;
+    const startTime = performance.now();
+    const update = (currentTime) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = start + (target - start) * eased;
+      el.textContent = current.toFixed(target % 1 !== 0 ? 1 : 0) + suffix;
+      if (progress < 1) requestAnimationFrame(update);
+    };
+    requestAnimationFrame(update);
+  };
+
+  const statsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const values = entry.target.querySelectorAll('.stat-value');
+        values.forEach(v => {
+          const text = v.textContent;
+          const num = parseFloat(text.replace(/[^0-9.]/g, ''));
+          const suffix = text.replace(/[0-9.]/g, '');
+          if (!isNaN(num)) {
+            v.innerHTML = `<span class="count">${num}</span><span>${suffix.includes('$') ? '' : suffix.replace(/^\$/, '')}</span>`;
+          }
+        });
+        statsObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  document.querySelector('.stats-row') && statsObserver.observe(document.querySelector('.stats-row'));
+</script>
+</body>
+</html>
