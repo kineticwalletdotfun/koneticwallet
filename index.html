@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KINETIC WALLET</title>
+<title>KINETIC WALLET — MOVE YOUR ASSETS</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #0a0a0a;
@@ -16,10 +16,10 @@
     --mid: #888880;
     --border: #1e1e1e;
     --red: #ff3b30;
+    --card: #0f0f0f;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
   html { scroll-behavior: smooth; }
 
   body {
@@ -33,735 +33,236 @@
   }
 
   ::selection { background: var(--accent); color: #000; }
-
-  /* SCROLLBAR */
   ::-webkit-scrollbar { width: 4px; }
   ::-webkit-scrollbar-track { background: var(--bg); }
   ::-webkit-scrollbar-thumb { background: var(--muted); }
 
-  /* NOISE OVERLAY */
   body::before {
     content: '';
-    position: fixed;
-    inset: 0;
+    position: fixed; inset: 0;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 9999;
-    opacity: 0.3;
+    pointer-events: none; z-index: 9999; opacity: 0.3;
   }
 
   /* NAV */
   nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     padding: 18px 48px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    display: flex; align-items: center; justify-content: space-between;
     border-bottom: 1px solid var(--border);
-    background: rgba(10,10,10,0.92);
-    backdrop-filter: blur(12px);
+    background: rgba(10,10,10,0.94); backdrop-filter: blur(14px);
   }
-
-  .nav-logo {
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    color: var(--fg);
-    text-decoration: none;
-  }
-
+  .nav-logo { font-size: 13px; font-weight: 700; letter-spacing: 0.2em; color: var(--fg); text-decoration: none; }
   .nav-logo span { color: var(--accent); }
-
-  .nav-links {
-    display: flex;
-    gap: 32px;
-    list-style: none;
-  }
-
-  .nav-links a {
-    color: var(--mid);
-    text-decoration: none;
-    font-size: 11px;
-    letter-spacing: 0.15em;
-    transition: color 0.2s;
-  }
-
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a { color: var(--mid); text-decoration: none; font-size: 11px; letter-spacing: 0.15em; transition: color 0.2s; }
   .nav-links a:hover { color: var(--accent); }
-
-  .nav-cta {
-    background: var(--accent);
-    color: #000;
-    padding: 8px 20px;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    border: none;
-    cursor: pointer;
-    transition: all 0.15s;
-  }
-
+  .nav-cta { background: var(--accent); color: #000; padding: 8px 20px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.15em; border: none; cursor: pointer; transition: all 0.15s; text-decoration: none; display: inline-block; }
   .nav-cta:hover { background: #fff; }
 
   /* TICKER */
   .ticker {
-    position: fixed;
-    top: 57px;
-    left: 0;
-    right: 0;
-    z-index: 99;
-    background: var(--accent);
-    color: #000;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    padding: 5px 0;
-    overflow: hidden;
-    white-space: nowrap;
+    position: fixed; top: 57px; left: 0; right: 0; z-index: 99;
+    background: var(--accent); color: #000;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.2em;
+    padding: 5px 0; overflow: hidden; white-space: nowrap;
   }
-
-  .ticker-inner {
-    display: inline-flex;
-    gap: 0;
-    animation: ticker 28s linear infinite;
-  }
-
-  .ticker-item {
-    padding: 0 24px;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-  }
-
+  .ticker-inner { display: inline-flex; animation: ticker 30s linear infinite; }
+  .ticker-item { padding: 0 24px; display: inline-flex; align-items: center; gap: 8px; }
   .ticker-dot { width: 4px; height: 4px; background: #000; display: inline-block; }
+  @keyframes ticker { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
 
-  @keyframes ticker {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
+  .scan-line { position: fixed; left: 0; right: 0; height: 1px; background: linear-gradient(90deg,transparent,rgba(200,255,0,0.12),transparent); pointer-events: none; z-index: 9998; animation: scan 9s linear infinite; }
+  @keyframes scan { 0%{top:-2px} 100%{top:100vh} }
 
   /* HERO */
-  .hero {
-    min-height: 100vh;
-    padding: 160px 48px 80px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0;
-    position: relative;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .hero::after {
-    content: '';
-    position: absolute;
-    top: 0; right: 0; bottom: 0;
-    width: 1px;
-    background: var(--border);
-  }
-
-  .hero-left {
-    padding-right: 48px;
-    border-right: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  .hero-tag {
-    font-size: 10px;
-    letter-spacing: 0.3em;
-    color: var(--accent);
-    margin-bottom: 32px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .hero-tag::before {
-    content: '';
-    width: 24px;
-    height: 1px;
-    background: var(--accent);
-    display: inline-block;
-  }
-
-  .hero-title {
-    font-size: clamp(52px, 7vw, 88px);
-    font-weight: 700;
-    line-height: 0.92;
-    letter-spacing: -0.03em;
-    margin-bottom: 40px;
-    text-transform: uppercase;
-  }
-
+  .hero { min-height: 100vh; padding: 160px 48px 80px; display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--border); }
+  .hero-left { padding-right: 48px; border-right: 1px solid var(--border); display: flex; flex-direction: column; justify-content: center; }
+  .hero-tag { font-size: 10px; letter-spacing: 0.3em; color: var(--accent); margin-bottom: 32px; display: flex; align-items: center; gap: 12px; }
+  .hero-tag::before { content:''; width:24px; height:1px; background:var(--accent); display:inline-block; }
+  .hero-title { font-size: clamp(52px,7vw,88px); font-weight: 700; line-height: 0.92; letter-spacing: -0.03em; margin-bottom: 40px; text-transform: uppercase; }
   .hero-title .line-accent { color: var(--accent); }
-  .hero-title .line-outline {
-    -webkit-text-stroke: 1px var(--fg);
-    color: transparent;
-  }
+  .hero-title .line-outline { -webkit-text-stroke: 1px var(--fg); color: transparent; }
+  .hero-desc { font-size: 12px; color: var(--mid); line-height: 1.8; max-width: 480px; margin-bottom: 48px; letter-spacing: 0.05em; }
+  .hero-actions { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
 
-  .hero-desc {
-    font-size: 12px;
-    color: var(--mid);
-    line-height: 1.8;
-    max-width: 480px;
-    margin-bottom: 48px;
-    letter-spacing: 0.05em;
-  }
-
-  .hero-actions {
-    display: flex;
-    gap: 16px;
-    align-items: center;
-    flex-wrap: wrap;
-  }
-
-  .btn-primary {
-    background: var(--accent);
-    color: #000;
-    padding: 14px 32px;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    border: none;
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-block;
-    transition: all 0.15s;
-    position: relative;
-  }
-
-  .btn-primary::after {
-    content: '↗';
-    margin-left: 8px;
-  }
-
+  /* BUTTONS */
+  .btn-primary { background: var(--accent); color: #000; padding: 14px 32px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.2em; border: none; cursor: pointer; text-decoration: none; display: inline-block; transition: all 0.15s; }
+  .btn-primary::after { content:'↗'; margin-left:8px; }
   .btn-primary:hover { background: var(--accent2); }
-
-  .btn-ghost {
-    border: 1px solid var(--muted);
-    color: var(--mid);
-    padding: 14px 32px;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-block;
-    transition: all 0.15s;
-    background: transparent;
-  }
-
+  .btn-ghost { border: 1px solid var(--muted); color: var(--mid); padding: 14px 32px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.2em; cursor: pointer; text-decoration: none; display: inline-block; transition: all 0.15s; background: transparent; }
   .btn-ghost:hover { border-color: var(--fg); color: var(--fg); }
 
-  .hero-right {
-    padding-left: 48px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 2px;
-  }
-
-  /* TERMINAL CARD */
-  .terminal {
-    background: #0f0f0f;
-    border: 1px solid var(--border);
-    padding: 0;
-    position: relative;
-    animation: fadeUp 0.8s ease 0.3s both;
-  }
-
-  .terminal-bar {
-    padding: 10px 16px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: #111;
-  }
-
-  .terminal-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-  }
-
-  .d1 { background: var(--red); }
-  .d2 { background: #ff9f0a; }
-  .d3 { background: var(--accent); }
-
-  .terminal-title {
-    font-size: 10px;
-    color: var(--mid);
-    letter-spacing: 0.15em;
-    margin-left: 8px;
-  }
-
-  .terminal-body {
-    padding: 24px;
-    font-size: 12px;
-    line-height: 1.8;
-  }
-
-  .t-line { display: flex; gap: 8px; align-items: flex-start; }
+  /* TERMINAL */
+  .hero-right { padding-left: 48px; display: flex; flex-direction: column; justify-content: center; }
+  .terminal { background: #0f0f0f; border: 1px solid var(--border); }
+  .terminal-bar { padding: 10px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; background: #111; }
+  .terminal-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .d1{background:var(--red)} .d2{background:#ff9f0a} .d3{background:var(--accent)}
+  .terminal-title { font-size: 10px; color: var(--mid); letter-spacing: 0.15em; margin-left: 8px; }
+  .terminal-body { padding: 24px; font-size: 12px; line-height: 1.8; }
+  .t-line { display: flex; gap: 8px; }
   .t-prompt { color: var(--accent); flex-shrink: 0; }
   .t-cmd { color: var(--fg); }
   .t-output { color: var(--mid); padding-left: 16px; }
   .t-value { color: var(--accent2); }
   .t-blank { height: 8px; }
-
-  .blink {
-    display: inline-block;
-    width: 7px;
-    height: 13px;
-    background: var(--accent);
-    vertical-align: middle;
-    animation: blink 1s step-end infinite;
-  }
-
+  .blink { display:inline-block; width:7px; height:13px; background:var(--accent); vertical-align:middle; animation:blink 1s step-end infinite; }
   @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
-  /* STATS ROW */
-  .stats-row {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .stat-item {
-    padding: 32px 48px;
-    border-right: 1px solid var(--border);
-    position: relative;
-    overflow: hidden;
-    transition: background 0.2s;
-  }
-
+  /* STATS */
+  .stats-row { display: grid; grid-template-columns: repeat(4,1fr); border-bottom: 1px solid var(--border); }
+  .stat-item { padding: 32px 48px; border-right: 1px solid var(--border); transition: background 0.2s; }
   .stat-item:last-child { border-right: none; }
-  .stat-item:hover { background: #0f0f0f; }
-
-  .stat-label {
-    font-size: 10px;
-    color: var(--mid);
-    letter-spacing: 0.2em;
-    margin-bottom: 12px;
-  }
-
-  .stat-value {
-    font-size: 36px;
-    font-weight: 700;
-    color: var(--fg);
-    line-height: 1;
-    margin-bottom: 8px;
-  }
-
+  .stat-item:hover { background: var(--card); }
+  .stat-label { font-size: 10px; color: var(--mid); letter-spacing: 0.2em; margin-bottom: 12px; }
+  .stat-value { font-size: 36px; font-weight: 700; color: var(--fg); line-height: 1; margin-bottom: 8px; }
   .stat-value span { color: var(--accent); }
+  .stat-sub { font-size: 10px; color: var(--mid); letter-spacing: 0.1em; }
 
-  .stat-sub {
-    font-size: 10px;
-    color: var(--mid);
-    letter-spacing: 0.1em;
-  }
-
-  /* SECTION */
+  /* SECTION HEADER */
   section { border-bottom: 1px solid var(--border); }
-
-  .section-header {
-    padding: 32px 48px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .section-label {
-    font-size: 10px;
-    letter-spacing: 0.3em;
-    color: var(--mid);
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .section-label::before {
-    content: '├──';
-    color: var(--muted);
-  }
-
-  .section-num {
-    font-size: 10px;
-    color: var(--muted);
-    letter-spacing: 0.1em;
-  }
+  .section-header { padding: 32px 48px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+  .section-label { font-size: 10px; letter-spacing: 0.3em; color: var(--mid); display: flex; align-items: center; gap: 12px; }
+  .section-label::before { content:'├──'; color: var(--muted); }
+  .section-num { font-size: 10px; color: var(--muted); letter-spacing: 0.1em; }
 
   /* FEATURES */
-  .features-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .feature-card {
-    padding: 48px;
-    border-right: 1px solid var(--border);
-    position: relative;
-    transition: background 0.2s;
-    overflow: hidden;
-  }
-
-  .feature-card:last-child { border-right: none; }
-  .feature-card:nth-child(3) { border-right: none; }
-  .feature-card:nth-child(4),
-  .feature-card:nth-child(5),
-  .feature-card:nth-child(6) {
-    border-top: 1px solid var(--border);
-  }
-  .feature-card:nth-child(6) { border-right: none; }
-
+  .features-grid { display: grid; grid-template-columns: repeat(3,1fr); }
+  .feature-card { padding: 48px; border-right: 1px solid var(--border); transition: background 0.2s; overflow: hidden; }
+  .feature-card:nth-child(3n) { border-right: none; }
+  .feature-card:nth-child(n+4) { border-top: 1px solid var(--border); }
   .feature-card:hover { background: #0d0d0d; }
-
-  .feature-card:hover .feature-icon {
-    border-color: var(--accent);
-    color: var(--accent);
-  }
-
-  .feature-num {
-    font-size: 10px;
-    color: var(--muted);
-    letter-spacing: 0.2em;
-    margin-bottom: 24px;
-  }
-
-  .feature-icon {
-    width: 48px;
-    height: 48px;
-    border: 1px solid var(--muted);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    margin-bottom: 24px;
-    transition: all 0.2s;
-  }
-
-  .feature-title {
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    margin-bottom: 16px;
-    color: var(--fg);
-  }
-
-  .feature-tag {
-    font-size: 9px;
-    letter-spacing: 0.2em;
-    color: var(--accent);
-    border: 1px solid var(--accent);
-    padding: 2px 8px;
-    display: inline-block;
-    margin-bottom: 16px;
-    text-transform: uppercase;
-  }
-
-  .feature-desc {
-    font-size: 11px;
-    color: var(--mid);
-    line-height: 1.8;
-  }
+  .feature-card:hover .feature-icon { border-color: var(--accent); }
+  .feature-num { font-size: 10px; color: var(--muted); letter-spacing: 0.2em; margin-bottom: 24px; }
+  .feature-icon { width: 48px; height: 48px; border: 1px solid var(--muted); display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 24px; transition: all 0.2s; }
+  .feature-title { font-size: 14px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 16px; }
+  .feature-tag { font-size: 9px; letter-spacing: 0.2em; color: var(--accent); border: 1px solid var(--accent); padding: 2px 8px; display: inline-block; margin-bottom: 16px; }
+  .feature-desc { font-size: 11px; color: var(--mid); line-height: 1.8; }
 
   /* HOW IT WORKS */
-  .how-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .how-left {
-    padding: 64px 48px;
-    border-right: 1px solid var(--border);
-  }
-
-  .how-title {
-    font-size: clamp(32px, 4vw, 52px);
-    font-weight: 700;
-    line-height: 1.0;
-    letter-spacing: -0.02em;
-    text-transform: uppercase;
-    margin-bottom: 32px;
-  }
-
+  .how-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .how-left { padding: 64px 48px; border-right: 1px solid var(--border); }
+  .how-title { font-size: clamp(32px,4vw,52px); font-weight: 700; line-height: 1.0; letter-spacing: -0.02em; text-transform: uppercase; margin-bottom: 32px; }
   .how-title .ac { color: var(--accent); }
-
-  .how-desc {
-    font-size: 12px;
-    color: var(--mid);
-    line-height: 1.9;
-    margin-bottom: 40px;
-  }
-
-  .how-right {
-    padding: 64px 48px;
-  }
-
-  .step-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-
-  .step-item {
-    display: flex;
-    gap: 24px;
-    padding: 28px 0;
-    border-bottom: 1px solid var(--border);
-    position: relative;
-    transition: padding-left 0.2s;
-    cursor: default;
-  }
-
+  .how-desc { font-size: 12px; color: var(--mid); line-height: 1.9; margin-bottom: 40px; }
+  .how-right { padding: 64px 48px; }
+  .step-item { display: flex; gap: 24px; padding: 28px 0; border-bottom: 1px solid var(--border); transition: padding-left 0.2s; cursor: default; }
   .step-item:last-child { border-bottom: none; }
   .step-item:hover { padding-left: 12px; }
   .step-item:hover .step-num { color: var(--accent); }
-
-  .step-num {
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: 0.15em;
-    flex-shrink: 0;
-    padding-top: 2px;
-    transition: color 0.2s;
-    width: 28px;
-  }
-
-  .step-content { flex: 1; }
-
-  .step-title {
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-  }
-
-  .step-desc {
-    font-size: 11px;
-    color: var(--mid);
-    line-height: 1.7;
-  }
+  .step-num { font-size: 11px; color: var(--muted); letter-spacing: 0.15em; flex-shrink: 0; padding-top: 2px; transition: color 0.2s; width: 28px; }
+  .step-title { font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+  .step-desc { font-size: 11px; color: var(--mid); line-height: 1.7; }
 
   /* CHAINS */
-  .chains-section {
-    padding: 64px 48px;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 0;
-  }
+  .chains-section { padding: 48px; display: grid; grid-template-columns: repeat(3,1fr); gap: 0; }
+  .chain-card { padding: 32px; border: 1px solid var(--border); margin: 8px; position: relative; transition: all 0.2s; cursor: pointer; }
+  .chain-card:hover { border-color: var(--accent); background: var(--card); }
+  .chain-name { font-size: 16px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 8px; }
+  .chain-type { font-size: 10px; color: var(--mid); letter-spacing: 0.15em; margin-bottom: 16px; }
+  .chain-addr { font-size: 10px; color: var(--accent2); letter-spacing: 0.05em; }
+  .chain-status { position: absolute; top: 16px; right: 16px; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s ease infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.8)} }
 
-  .chain-card {
-    padding: 32px;
-    border: 1px solid var(--border);
-    margin: 8px;
-    position: relative;
-    transition: all 0.2s;
-    cursor: pointer;
-  }
+  /* ABOUT */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .about-left { padding: 80px 48px; border-right: 1px solid var(--border); }
+  .about-right { padding: 80px 48px; display: flex; flex-direction: column; gap: 24px; }
+  .about-eyebrow { font-size: 10px; letter-spacing: 0.35em; color: var(--accent); margin-bottom: 24px; display: flex; align-items: center; gap: 10px; }
+  .about-eyebrow::before { content:''; width:20px; height:1px; background:var(--accent); }
+  .about-title { font-size: clamp(28px,3.5vw,48px); font-weight: 700; line-height: 0.96; letter-spacing: -0.02em; text-transform: uppercase; margin-bottom: 40px; }
+  .about-title .ac { color: var(--accent); }
+  .about-body { font-size: 12px; color: var(--mid); line-height: 2.0; margin-bottom: 20px; }
+  .about-belief { border-left: 2px solid var(--accent); padding: 20px 24px; background: var(--card); }
+  .about-belief-num { font-size: 9px; letter-spacing: 0.3em; color: var(--accent); margin-bottom: 8px; }
+  .about-belief-title { font-size: 13px; font-weight: 700; letter-spacing: 0.1em; margin-bottom: 8px; }
+  .about-belief-desc { font-size: 11px; color: var(--mid); line-height: 1.7; }
+  .about-quote { border: 1px solid var(--border); padding: 32px; background: var(--card); position: relative; }
+  .about-quote::before { content:'"'; position:absolute; top:12px; left:20px; font-size:48px; color:var(--accent); line-height:1; font-family:serif; }
+  .about-quote p { font-size: 12px; color: var(--fg); line-height: 1.9; padding-top: 24px; font-style: italic; }
+  .about-quote cite { display: block; margin-top: 16px; font-size: 10px; color: var(--mid); letter-spacing: 0.2em; font-style: normal; }
 
-  .chain-card:hover {
-    border-color: var(--accent);
-    background: #0f0f0f;
-  }
+  /* TEAM */
+  .team-grid { display: grid; grid-template-columns: repeat(4,1fr); }
+  .team-card { padding: 40px 32px; border-right: 1px solid var(--border); transition: background 0.2s; position: relative; overflow: hidden; }
+  .team-card:nth-child(4n) { border-right: none; }
+  .team-card:nth-child(n+5) { border-top: 1px solid var(--border); }
+  .team-card:hover { background: var(--card); }
+  .team-card:hover .team-avatar { border-color: var(--accent); }
+  .team-avatar { width: 72px; height: 72px; border: 1px solid var(--muted); display: flex; align-items: center; justify-content: center; font-size: 28px; margin-bottom: 24px; transition: border-color 0.2s; background: var(--bg); }
+  .team-name { font-size: 14px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; line-height: 1.3; }
+  .team-role { font-size: 10px; letter-spacing: 0.2em; color: var(--accent); margin-bottom: 16px; }
+  .team-bio { font-size: 11px; color: var(--mid); line-height: 1.7; margin-bottom: 20px; }
+  .team-links { display: flex; gap: 10px; }
+  .team-link { font-size: 9px; letter-spacing: 0.15em; color: var(--muted); border: 1px solid var(--border); padding: 4px 10px; text-decoration: none; transition: all 0.2s; }
+  .team-link:hover { color: var(--accent); border-color: var(--accent); }
+  .team-bg-num { position: absolute; bottom: -20px; right: -8px; font-size: 100px; font-weight: 700; color: var(--border); line-height: 1; pointer-events: none; user-select: none; }
 
-  .chain-name {
-    font-size: 16px;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-  }
-
-  .chain-type {
-    font-size: 10px;
-    color: var(--mid);
-    letter-spacing: 0.15em;
-    margin-bottom: 16px;
-  }
-
-  .chain-addr {
-    font-size: 10px;
-    color: var(--accent2);
-    letter-spacing: 0.05em;
-    word-break: break-all;
-  }
-
-  .chain-status {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--accent);
-    animation: pulse 2s ease infinite;
-  }
-
-  @keyframes pulse {
-    0%,100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.4; transform: scale(0.8); }
-  }
+  /* ROADMAP */
+  .roadmap-container { padding: 64px 48px; }
+  .roadmap-track { position: relative; padding-left: 52px; }
+  .roadmap-track::before { content:''; position:absolute; left:10px; top:0; bottom:0; width:1px; background:linear-gradient(to bottom,var(--accent),var(--accent2),var(--muted)); }
+  .roadmap-item { position: relative; padding: 32px 0 40px 40px; border-bottom: 1px solid var(--border); }
+  .roadmap-item:last-child { border-bottom: none; }
+  .roadmap-dot { position: absolute; left: -46px; top: 36px; width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--accent); background: var(--bg); transition: all 0.3s; }
+  .roadmap-item.done .roadmap-dot { background: var(--accent); border-color: var(--accent); }
+  .roadmap-item.active .roadmap-dot { background: var(--accent2); border-color: var(--accent2); box-shadow: 0 0 14px var(--accent2); animation: pulse 1.5s ease infinite; }
+  .roadmap-item.upcoming .roadmap-dot { background: var(--bg); border-color: var(--muted); }
+  .roadmap-header { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
+  .roadmap-date { font-size: 10px; letter-spacing: 0.25em; color: var(--mid); }
+  .roadmap-status { font-size: 9px; letter-spacing: 0.2em; padding: 3px 10px; border: 1px solid; }
+  .roadmap-status.done { color: var(--accent); border-color: var(--accent); }
+  .roadmap-status.active { color: var(--accent2); border-color: var(--accent2); }
+  .roadmap-status.upcoming { color: var(--muted); border-color: var(--muted); }
+  .roadmap-phase { font-size: 10px; letter-spacing: 0.25em; color: var(--muted); }
+  .roadmap-title { font-size: 20px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 12px; }
+  .roadmap-desc { font-size: 11px; color: var(--mid); line-height: 1.85; margin-bottom: 20px; max-width: 720px; }
+  .roadmap-milestones { display: flex; flex-wrap: wrap; gap: 8px; }
+  .milestone { font-size: 10px; letter-spacing: 0.1em; padding: 4px 12px; border: 1px solid var(--border); color: var(--mid); }
+  .roadmap-item.done .milestone { border-color: rgba(200,255,0,0.25); color: var(--accent); }
+  .roadmap-item.active .milestone { border-color: rgba(0,255,200,0.25); color: var(--accent2); }
 
   /* BIG CTA */
-  .big-cta {
-    padding: 120px 48px;
-    text-align: center;
-    position: relative;
-    background: #050505;
-    overflow: hidden;
-  }
-
-  .big-cta::before {
-    content: 'KINETIC';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: clamp(80px, 18vw, 240px);
-    font-weight: 700;
-    letter-spacing: -0.04em;
-    color: transparent;
-    -webkit-text-stroke: 1px #1a1a1a;
-    pointer-events: none;
-    white-space: nowrap;
-    z-index: 0;
-  }
-
+  .big-cta { padding: 120px 48px; text-align: center; position: relative; background: #050505; overflow: hidden; border-bottom: none; }
+  .big-cta::before { content:'KINETIC'; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:clamp(80px,18vw,240px); font-weight:700; letter-spacing:-0.04em; color:transparent; -webkit-text-stroke:1px #1a1a1a; pointer-events:none; white-space:nowrap; z-index:0; }
   .big-cta-content { position: relative; z-index: 1; }
-
-  .big-cta-label {
-    font-size: 10px;
-    letter-spacing: 0.4em;
-    color: var(--accent);
-    margin-bottom: 24px;
-  }
-
-  .big-cta-title {
-    font-size: clamp(32px, 5vw, 64px);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: -0.02em;
-    margin-bottom: 24px;
-    line-height: 1.1;
-  }
-
-  .big-cta-sub {
-    font-size: 12px;
-    color: var(--mid);
-    margin-bottom: 48px;
-    max-width: 480px;
-    margin-left: auto;
-    margin-right: auto;
-    line-height: 1.8;
-  }
-
-  .cta-buttons {
-    display: flex;
-    gap: 16px;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
+  .big-cta-label { font-size: 10px; letter-spacing: 0.4em; color: var(--accent); margin-bottom: 24px; }
+  .big-cta-title { font-size: clamp(32px,5vw,64px); font-weight: 700; text-transform: uppercase; letter-spacing: -0.02em; margin-bottom: 24px; line-height: 1.1; }
+  .big-cta-sub { font-size: 12px; color: var(--mid); margin-bottom: 48px; max-width: 480px; margin-left: auto; margin-right: auto; line-height: 1.8; }
+  .cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; align-items: center; }
+  .orynth-badge { display: inline-block; opacity: 0.85; transition: opacity 0.2s; vertical-align: middle; }
+  .orynth-badge:hover { opacity: 1; }
 
   /* FOOTER */
-  footer {
-    padding: 32px 48px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-top: 1px solid var(--border);
-    flex-wrap: wrap;
-    gap: 16px;
-  }
-
-  .footer-left {
-    font-size: 11px;
-    color: var(--mid);
-    letter-spacing: 0.1em;
-  }
-
-  .footer-links {
-    display: flex;
-    gap: 24px;
-    list-style: none;
-  }
-
-  .footer-links a {
-    font-size: 10px;
-    color: var(--muted);
-    text-decoration: none;
-    letter-spacing: 0.15em;
-    transition: color 0.2s;
-  }
-
-  .footer-links a:hover { color: var(--accent); }
-
-  .footer-address {
-    font-size: 10px;
-    color: var(--muted);
-    letter-spacing: 0.05em;
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-
-  .addr-chip {
-    border: 1px solid var(--border);
-    padding: 4px 10px;
-    display: flex;
-    gap: 6px;
-    align-items: center;
-  }
-
-  .addr-chip span:first-child {
-    color: var(--mid);
-    font-size: 9px;
-    letter-spacing: 0.2em;
-  }
-
-  .addr-chip span:last-child {
-    color: var(--accent2);
-    font-size: 10px;
-  }
+  footer { border-top: 1px solid var(--border); }
+  .footer-top { padding: 56px 48px; display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 56px; border-bottom: 1px solid var(--border); }
+  .footer-logo { font-size: 15px; font-weight: 700; letter-spacing: 0.2em; margin-bottom: 16px; }
+  .footer-logo span { color: var(--accent); }
+  .footer-tagline { font-size: 11px; color: var(--mid); line-height: 1.9; margin-bottom: 28px; max-width: 280px; }
+  .footer-col-title { font-size: 10px; letter-spacing: 0.3em; color: var(--mid); margin-bottom: 20px; }
+  .footer-col-links { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .footer-col-links a { font-size: 11px; color: var(--muted); text-decoration: none; letter-spacing: 0.1em; transition: color 0.2s; }
+  .footer-col-links a:hover { color: var(--accent); }
+  .footer-social { display: flex; gap: 10px; }
+  .social-btn { border: 1px solid var(--border); padding: 8px 14px; font-size: 10px; letter-spacing: 0.15em; color: var(--mid); text-decoration: none; transition: all 0.2s; font-family: 'IBM Plex Mono', monospace; }
+  .social-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .footer-bottom { padding: 20px 48px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  .footer-copy { font-size: 10px; color: var(--muted); letter-spacing: 0.1em; }
+  .footer-addresses { display: flex; gap: 12px; flex-wrap: wrap; }
+  .addr-chip { border: 1px solid var(--border); padding: 4px 10px; display: flex; gap: 6px; align-items: center; }
+  .addr-chip span:first-child { color: var(--mid); font-size: 9px; letter-spacing: 0.2em; }
+  .addr-chip span:last-child { color: var(--accent2); font-size: 10px; }
 
   /* ANIMATIONS */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  .fade-up { animation: fadeUp 0.7s ease both; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+  .fade-up   { animation: fadeUp 0.7s ease both; }
   .fade-up-2 { animation: fadeUp 0.7s ease 0.15s both; }
   .fade-up-3 { animation: fadeUp 0.7s ease 0.3s both; }
   .fade-up-4 { animation: fadeUp 0.7s ease 0.45s both; }
 
-  /* SCAN LINE */
-  .scan-line {
-    position: fixed;
-    left: 0; right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(200,255,0,0.15), transparent);
-    pointer-events: none;
-    z-index: 9998;
-    animation: scan 8s linear infinite;
-  }
-
-  @keyframes scan {
-    0% { top: -2px; }
-    100% { top: 100vh; }
-  }
-
   /* MOBILE */
-  @media (max-width: 900px) {
+  @media (max-width: 960px) {
     nav { padding: 14px 20px; }
     .nav-links { display: none; }
     .hero { grid-template-columns: 1fr; padding: 140px 20px 60px; }
@@ -770,13 +271,17 @@
     .stats-row { grid-template-columns: 1fr 1fr; }
     .stat-item { padding: 24px 20px; }
     .features-grid { grid-template-columns: 1fr; }
-    .feature-card { border-right: none !important; border-top: 1px solid var(--border) !important; }
-    .feature-card:first-child { border-top: none !important; }
-    .how-grid { grid-template-columns: 1fr; }
-    .how-left { border-right: none; }
-    .chains-section { grid-template-columns: 1fr; padding: 32px 20px; }
-    .section-header, .how-left, .how-right { padding: 40px 20px; }
-    footer { padding: 24px 20px; flex-direction: column; align-items: flex-start; }
+    .feature-card { border-right: none !important; }
+    .how-grid, .about-grid { grid-template-columns: 1fr; }
+    .how-left, .about-left { border-right: none; }
+    .chains-section { grid-template-columns: 1fr; padding: 20px; }
+    .section-header, .how-left, .how-right, .about-left, .about-right { padding: 40px 20px; }
+    .team-grid { grid-template-columns: 1fr 1fr !important; }
+    .team-card { border-right: 1px solid var(--border) !important; }
+    .team-card:nth-child(2n) { border-right: none !important; }
+    .footer-top { grid-template-columns: 1fr; padding: 32px 20px; gap: 32px; }
+    .footer-bottom { padding: 16px 20px; flex-direction: column; align-items: flex-start; }
+    .roadmap-container { padding: 40px 20px !important; }
     .big-cta { padding: 80px 20px; }
   }
 </style>
@@ -787,36 +292,40 @@
 
 <!-- NAV -->
 <nav>
-  <a href="#" class="nav-logo">⚡ KINETIC<span>WALLET</span></a>
+  <a href="#home" class="nav-logo">⚡ KINETIC<span>WALLET</span></a>
   <ul class="nav-links">
     <li><a href="#features">FEATURES</a></li>
     <li><a href="#how">HOW IT WORKS</a></li>
     <li><a href="#chains">NETWORKS</a></li>
-    <li><a href="#docs">DOCS</a></li>
+    <li><a href="#about">ABOUT</a></li>
+    <li><a href="#team">TEAM</a></li>
+    <li><a href="#roadmap">ROADMAP</a></li>
   </ul>
-  <button class="nav-cta">LAUNCH_APP</button>
+  <a href="#" class="nav-cta">LAUNCH_APP</a>
 </nav>
 
 <!-- TICKER -->
 <div class="ticker">
   <div class="ticker-inner">
-    <span class="ticker-item"><span class="ticker-dot"></span> INSTANT SETTLEMENT</span>
-    <span class="ticker-item"><span class="ticker-dot"></span> MULTICHAIN SUPPORT</span>
-    <span class="ticker-item"><span class="ticker-dot"></span> ZERO GAS BRIDGING</span>
-    <span class="ticker-item"><span class="ticker-dot"></span> NON-CUSTODIAL</span>
-    <span class="ticker-item"><span class="ticker-dot"></span> OPEN SOURCE</span>
-    <span class="ticker-item"><span class="ticker-dot"></span> 256-BIT ENCRYPTION</span>
-    <span class="ticker-item"><span class="ticker-dot"></span> INSTANT SETTLEMENT</span>
-    <span class="ticker-item"><span class="ticker-dot"></span> MULTICHAIN SUPPORT</span>
-    <span class="ticker-item"><span class="ticker-dot"></span> ZERO GAS BRIDGING</span>
-    <span class="ticker-item"><span class="ticker-dot"></span> NON-CUSTODIAL</span>
-    <span class="ticker-item"><span class="ticker-dot"></span> OPEN SOURCE</span>
-    <span class="ticker-item"><span class="ticker-dot"></span> 256-BIT ENCRYPTION</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>INSTANT SETTLEMENT</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>MULTICHAIN SUPPORT</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>ZERO GAS BRIDGING</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>NON-CUSTODIAL</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>OPEN SOURCE · MIT</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>256-BIT ENCRYPTION</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>16+ NETWORKS LIVE</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>INSTANT SETTLEMENT</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>MULTICHAIN SUPPORT</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>ZERO GAS BRIDGING</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>NON-CUSTODIAL</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>OPEN SOURCE · MIT</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>256-BIT ENCRYPTION</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>16+ NETWORKS LIVE</span>
   </div>
 </div>
 
 <!-- HERO -->
-<section class="hero">
+<section class="hero" id="home">
   <div class="hero-left">
     <div class="hero-tag fade-up">V1.0 · NOW LIVE</div>
     <h1 class="hero-title fade-up-2">
@@ -830,10 +339,9 @@
     </p>
     <div class="hero-actions fade-up-4">
       <a href="#" class="btn-primary">GET_STARTED</a>
-      <a href="#" class="btn-ghost">VIEW_DOCS</a>
+      <a href="https://github.com/kineticwalletdotfun/koneticwallet" target="_blank" rel="noopener" class="btn-ghost">VIEW_GITHUB</a>
     </div>
   </div>
-
   <div class="hero-right">
     <div class="terminal fade-up-3">
       <div class="terminal-bar">
@@ -892,7 +400,7 @@
 <section id="features">
   <div class="section-header">
     <span class="section-label">CORE_FEATURES</span>
-    <span class="section-num">01 / 04</span>
+    <span class="section-num">01 / 06</span>
   </div>
   <div class="features-grid">
     <div class="feature-card">
@@ -914,7 +422,7 @@
       <div class="feature-icon">🔗</div>
       <div class="feature-tag">MULTICHAIN</div>
       <div class="feature-title">CROSS-CHAIN BRIDGE</div>
-      <p class="feature-desc">BRIDGE ASSETS ACROSS ETH, SOL, BASE, AND 13+ NETWORKS IN SINGLE CLICK. OPTIMIZED ROUTING FOR MINIMUM SLIPPAGE AND FEES.</p>
+      <p class="feature-desc">BRIDGE ASSETS ACROSS ETH, SOL, BASE, AND 13+ NETWORKS IN ONE CLICK. OPTIMIZED ROUTING FOR MINIMUM SLIPPAGE AND FEES.</p>
     </div>
     <div class="feature-card">
       <div class="feature-num">04</div>
@@ -944,19 +452,12 @@
 <section id="how">
   <div class="section-header">
     <span class="section-label">HOW_IT_WORKS</span>
-    <span class="section-num">02 / 04</span>
+    <span class="section-num">02 / 06</span>
   </div>
   <div class="how-grid">
     <div class="how-left">
-      <h2 class="how-title">
-        ASSETS IN<br>
-        <span class="ac">MOTION.</span><br>
-        ALWAYS.
-      </h2>
-      <p class="how-desc">
-        KINETIC IS ENGINEERED AROUND A SINGLE PRINCIPLE: YOUR WEALTH SHOULD MOVE AS FAST AS YOU THINK. FROM SETUP TO SETTLEMENT, EVERY STEP IS OPTIMIZED FOR SPEED AND PRECISION.<br><br>
-        UNDER THE HOOD, KINETIC USES A PROPRIETARY ROUTING ENGINE THAT FINDS THE FASTEST AND CHEAPEST PATH FOR EVERY TRANSACTION — AUTOMATICALLY.
-      </p>
+      <h2 class="how-title">ASSETS IN<br><span class="ac">MOTION.</span><br>ALWAYS.</h2>
+      <p class="how-desc">KINETIC IS ENGINEERED AROUND A SINGLE PRINCIPLE: YOUR WEALTH SHOULD MOVE AS FAST AS YOU THINK. FROM SETUP TO SETTLEMENT, EVERY STEP IS OPTIMIZED FOR SPEED AND PRECISION.<br><br>UNDER THE HOOD, KINETIC USES A PROPRIETARY ROUTING ENGINE THAT FINDS THE FASTEST AND CHEAPEST PATH FOR EVERY TRANSACTION — AUTOMATICALLY.</p>
       <a href="#" class="btn-primary">READ_WHITEPAPER</a>
     </div>
     <div class="how-right">
@@ -998,7 +499,7 @@
 <section id="chains">
   <div class="section-header">
     <span class="section-label">SUPPORTED_NETWORKS</span>
-    <span class="section-num">03 / 04</span>
+    <span class="section-num">03 / 06</span>
   </div>
   <div class="chains-section">
     <div class="chain-card">
@@ -1040,104 +541,378 @@
   </div>
 </section>
 
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header">
+    <span class="section-label">WHY_WE_BUILT_THIS</span>
+    <span class="section-num">04 / 06</span>
+  </div>
+  <div class="about-grid">
+    <div class="about-left">
+      <div class="about-eyebrow">OUR MISSION</div>
+      <h2 class="about-title">
+        THE FINANCIAL<br>SYSTEM MOVES<br>AT THE SPEED<br>OF TRUST.<br>
+        <span class="ac">WE BUILT<br>KINETIC TO<br>MOVE FASTER.</span>
+      </h2>
+      <p class="about-body">THE PROBLEM WAS SIMPLE — AND INFURIATING. SENDING MONEY ACROSS CHAINS TOOK MINUTES. FEES WERE UNPREDICTABLE. YOUR ASSETS SAT IN CUSTODIAL HANDS YOU NEVER CHOSE TO TRUST. WALLETS WERE BUILT FOR DEVELOPERS, NOT FOR PEOPLE WHO JUST WANTED TO MOVE VALUE INSTANTLY AND SECURELY.</p>
+      <p class="about-body">WE WATCHED BILLIONS OF DOLLARS SIT IDLE, LOCKED BEHIND SLOW BRIDGES, OPAQUE FEE STRUCTURES, AND INTERFACES THAT PUNISHED CURIOSITY. SO WE BUILT SOMETHING DIFFERENT — A TOOL THAT COMBINED SPEED, SECURITY, AND SIMPLICITY IN ONE PLACE. ACROSS 16+ NETWORKS. WITHOUT FRICTION.</p>
+      <p class="about-body">KINETIC IS BUILT FOR THE PEOPLE WHO MOVE FAST, THINK CLEARLY, AND REFUSE TO COMPROMISE. <strong style="color:var(--accent)">⚡ PUT YOUR ASSETS IN MOTION.</strong></p>
+    </div>
+    <div class="about-right">
+      <div class="about-belief">
+        <div class="about-belief-num">01 — SPEED IS NON-NEGOTIABLE</div>
+        <div class="about-belief-title">EVERY SECOND COSTS YOU.</div>
+        <p class="about-belief-desc">EVERY SECOND YOUR TRANSACTION SPENDS UNCONFIRMED IS A SECOND THE MARKET MOVES WITHOUT YOU. WE ENGINEERED SUB-2-SECOND SETTLEMENT FROM DAY ONE — NOT AS A FEATURE, BUT AS A FOUNDATION.</p>
+      </div>
+      <div class="about-belief">
+        <div class="about-belief-num">02 — YOUR KEYS NEVER LEAVE YOUR HANDS</div>
+        <div class="about-belief-title">CUSTODY IS TRUST YOU DIDN'T ASK TO GIVE.</div>
+        <p class="about-belief-desc">KINETIC IS FULLY NON-CUSTODIAL. YOUR SEED PHRASE IS ENCRYPTED LOCALLY, YOUR KEYS NEVER TOUCH OUR SERVERS, AND YOUR ASSETS REMAIN YOURS — UNCONDITIONALLY.</p>
+      </div>
+      <div class="about-belief">
+        <div class="about-belief-num">03 — COMPLEXITY SHOULD BE INVISIBLE</div>
+        <div class="about-belief-title">MULTICHAIN DOESN'T MEAN COMPLICATED.</div>
+        <p class="about-belief-desc">CROSS-CHAIN ROUTING, GAS OPTIMIZATION, AND SETTLEMENT LOGIC HAPPEN BEHIND THE SCENES — SO YOU ONLY SEE WHAT MATTERS: YOUR ASSETS, MOVING.</p>
+      </div>
+      <div class="about-quote">
+        <p>We built Kinetic because the tools didn't exist. Not a wallet that combined speed, security, and simplicity in one place. Not one that worked across 16+ networks without friction. Not one that was truly open, auditable, and built for the long term.</p>
+        <cite>— MATHIEU VANDENBERGHE, FOUNDER & CEO</cite>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team">
+  <div class="section-header">
+    <span class="section-label">THE_TEAM</span>
+    <span class="section-num">05 / 06</span>
+  </div>
+  <div class="team-grid">
+    <div class="team-card">
+      <div class="team-bg-num">01</div>
+      <div class="team-avatar">🧠</div>
+      <div class="team-name">MATHIEU<br>VANDENBERGHE</div>
+      <div class="team-role">FOUNDER & CEO</div>
+      <p class="team-bio">FORMER QUANT AT KBC GROUP. BUILT HIGH-FREQUENCY SETTLEMENT SYSTEMS FOR EURONEXT BEFORE GOING ALL-IN ON DECENTRALIZED INFRASTRUCTURE IN 2021.</p>
+      <div class="team-links">
+        <a href="https://x.com/kineticwallet" target="_blank" rel="noopener" class="team-link">𝕏</a>
+        <a href="https://github.com/kineticwalletdotfun/koneticwallet" target="_blank" rel="noopener" class="team-link">GITHUB</a>
+      </div>
+    </div>
+    <div class="team-card">
+      <div class="team-bg-num">02</div>
+      <div class="team-avatar">⚡</div>
+      <div class="team-name">ELISE<br>DEWAELE</div>
+      <div class="team-role">CTO & CO-FOUNDER</div>
+      <p class="team-bio">EX-IMEC RESEARCHER IN CRYPTOGRAPHIC PROTOCOLS. DESIGNED THE CORE ROUTING ENGINE AND NON-CUSTODIAL KEY ARCHITECTURE POWERING KINETIC.</p>
+      <div class="team-links">
+        <a href="https://x.com/kineticwallet" target="_blank" rel="noopener" class="team-link">𝕏</a>
+        <a href="https://github.com/kineticwalletdotfun/koneticwallet" target="_blank" rel="noopener" class="team-link">GITHUB</a>
+      </div>
+    </div>
+    <div class="team-card">
+      <div class="team-bg-num">03</div>
+      <div class="team-avatar">🔗</div>
+      <div class="team-name">NICOLAS<br>CLAES</div>
+      <div class="team-role">HEAD OF PROTOCOL</div>
+      <p class="team-bio">PREVIOUSLY CORE CONTRIBUTOR AT GNOSIS CHAIN. BUILT THE CROSS-CHAIN BRIDGE MODULE AND MULTICHAIN SETTLEMENT LAYER FROM THE GROUND UP.</p>
+      <div class="team-links">
+        <a href="https://x.com/kineticwallet" target="_blank" rel="noopener" class="team-link">𝕏</a>
+        <a href="https://github.com/kineticwalletdotfun/koneticwallet" target="_blank" rel="noopener" class="team-link">GITHUB</a>
+      </div>
+    </div>
+    <div class="team-card">
+      <div class="team-bg-num">04</div>
+      <div class="team-avatar">🎨</div>
+      <div class="team-name">AMÉLIE<br>LECOMTE</div>
+      <div class="team-role">DESIGN LEAD</div>
+      <p class="team-bio">AWARD-WINNING PRODUCT DESIGNER FROM BRUSSELS. OBSESSED WITH REMOVING FRICTION FROM COMPLEX FINANCIAL INTERFACES. PREVIOUSLY AT BELFIUS DIGITAL.</p>
+      <div class="team-links">
+        <a href="https://x.com/kineticwallet" target="_blank" rel="noopener" class="team-link">𝕏</a>
+        <a href="https://github.com/kineticwalletdotfun/koneticwallet" target="_blank" rel="noopener" class="team-link">GITHUB</a>
+      </div>
+    </div>
+    <div class="team-card">
+      <div class="team-bg-num">05</div>
+      <div class="team-avatar">🔐</div>
+      <div class="team-name">PIETER<br>DESMET</div>
+      <div class="team-role">HEAD OF SECURITY</div>
+      <p class="team-bio">CERTIFIED ETHICAL HACKER AND BLOCKCHAIN AUDITOR. FORMER SECURITY LEAD AT SWIFT BRUSSELS. OVERSEES ALL PROTOCOL AUDITS AND KEY MANAGEMENT SYSTEMS.</p>
+      <div class="team-links">
+        <a href="https://x.com/kineticwallet" target="_blank" rel="noopener" class="team-link">𝕏</a>
+        <a href="https://github.com/kineticwalletdotfun/koneticwallet" target="_blank" rel="noopener" class="team-link">GITHUB</a>
+      </div>
+    </div>
+    <div class="team-card">
+      <div class="team-bg-num">06</div>
+      <div class="team-avatar">📊</div>
+      <div class="team-name">FLORENCE<br>BUYSSE</div>
+      <div class="team-role">HEAD OF GROWTH</div>
+      <p class="team-bio">GROWTH STRATEGIST WITH A DECADE IN FINTECH ACROSS BENELUX. SCALED TWO CRYPTO STARTUPS FROM ZERO TO 100K USERS. DRIVES KINETIC'S GO-TO-MARKET.</p>
+      <div class="team-links">
+        <a href="https://x.com/kineticwallet" target="_blank" rel="noopener" class="team-link">𝕏</a>
+        <a href="https://github.com/kineticwalletdotfun/koneticwallet" target="_blank" rel="noopener" class="team-link">GITHUB</a>
+      </div>
+    </div>
+    <div class="team-card">
+      <div class="team-bg-num">07</div>
+      <div class="team-avatar">⚙️</div>
+      <div class="team-name">THOMAS<br>WILLEMS</div>
+      <div class="team-role">SENIOR ENGINEER</div>
+      <p class="team-bio">FULL-STACK WEB3 ENGINEER SPECIALIZING IN SOLIDITY AND RUST. PREVIOUSLY BUILT DEFI PRIMITIVES AT HARVEST FINANCE. LEADS SDK AND API DEVELOPMENT.</p>
+      <div class="team-links">
+        <a href="https://x.com/kineticwallet" target="_blank" rel="noopener" class="team-link">𝕏</a>
+        <a href="https://github.com/kineticwalletdotfun/koneticwallet" target="_blank" rel="noopener" class="team-link">GITHUB</a>
+      </div>
+    </div>
+    <div class="team-card">
+      <div class="team-bg-num">08</div>
+      <div class="team-avatar">🌐</div>
+      <div class="team-name">SARA<br>NIJS</div>
+      <div class="team-role">COMMUNITY LEAD</div>
+      <p class="team-bio">COMMUNITY BUILDER AND WEB3 ADVOCATE FROM GHENT. RUNS THE KINETIC DEVELOPER ECOSYSTEM, DISCORD, AND AMBASSADOR PROGRAM ACROSS 40+ COUNTRIES.</p>
+      <div class="team-links">
+        <a href="https://x.com/kineticwallet" target="_blank" rel="noopener" class="team-link">𝕏</a>
+        <a href="https://github.com/kineticwalletdotfun/koneticwallet" target="_blank" rel="noopener" class="team-link">GITHUB</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section id="roadmap">
+  <div class="section-header">
+    <span class="section-label">ROADMAP_2026</span>
+    <span class="section-num">06 / 06</span>
+  </div>
+  <div class="roadmap-container">
+    <div class="roadmap-track">
+
+      <div class="roadmap-item done">
+        <div class="roadmap-dot"></div>
+        <div class="roadmap-header">
+          <span class="roadmap-date">MARCH 2026</span>
+          <span class="roadmap-status done">✓ COMPLETED</span>
+          <span class="roadmap-phase">PHASE 1 · GENESIS</span>
+        </div>
+        <div class="roadmap-title">PUBLIC LAUNCH & CORE WALLET</div>
+        <p class="roadmap-desc">Official v1.0 launch of the Kinetic Wallet. Core send/receive functionality across ETH, SOL, BTC, and BASE. Non-custodial key generation with AES-256 local encryption. Web app and browser extension live.</p>
+        <div class="roadmap-milestones">
+          <span class="milestone">V1.0 MAINNET LAUNCH</span>
+          <span class="milestone">ETH / SOL / BTC / BASE</span>
+          <span class="milestone">BROWSER EXTENSION</span>
+          <span class="milestone">NON-CUSTODIAL VAULT</span>
+          <span class="milestone">OPEN SOURCE · MIT</span>
+        </div>
+      </div>
+
+      <div class="roadmap-item active">
+        <div class="roadmap-dot"></div>
+        <div class="roadmap-header">
+          <span class="roadmap-date">APRIL — MAY 2026</span>
+          <span class="roadmap-status active">⚡ IN PROGRESS</span>
+          <span class="roadmap-phase">PHASE 2 · BRIDGE</span>
+        </div>
+        <div class="roadmap-title">CROSS-CHAIN BRIDGE ENGINE</div>
+        <p class="roadmap-desc">Full deployment of the Kinetic routing engine. Single-click cross-chain bridging across 16+ networks. Automated slippage optimization, fee comparison, and bridge path selection. AVAX, POLYGON, ARB, OP added.</p>
+        <div class="roadmap-milestones">
+          <span class="milestone">16+ NETWORKS LIVE</span>
+          <span class="milestone">AUTO-ROUTING ENGINE</span>
+          <span class="milestone">AVAX + POLYGON + ARB</span>
+          <span class="milestone">GAS OPTIMIZER</span>
+          <span class="milestone">BRIDGE ANALYTICS</span>
+        </div>
+      </div>
+
+      <div class="roadmap-item upcoming">
+        <div class="roadmap-dot"></div>
+        <div class="roadmap-header">
+          <span class="roadmap-date">JUNE — JULY 2026</span>
+          <span class="roadmap-status upcoming">UPCOMING</span>
+          <span class="roadmap-phase">PHASE 3 · ANALYTICS</span>
+        </div>
+        <div class="roadmap-title">PORTFOLIO DASHBOARD & TRACKER</div>
+        <p class="roadmap-desc">Full-featured portfolio tracker with real-time PNL, 30-day and 1-year performance charts, tax-ready export (CSV / PDF), yield tracking, and multi-wallet aggregation. Mobile app beta for iOS and Android.</p>
+        <div class="roadmap-milestones">
+          <span class="milestone">REAL-TIME PNL</span>
+          <span class="milestone">TAX EXPORT</span>
+          <span class="milestone">YIELD TRACKER</span>
+          <span class="milestone">iOS BETA</span>
+          <span class="milestone">ANDROID BETA</span>
+          <span class="milestone">MULTI-WALLET VIEW</span>
+        </div>
+      </div>
+
+      <div class="roadmap-item upcoming">
+        <div class="roadmap-dot"></div>
+        <div class="roadmap-header">
+          <span class="roadmap-date">AUGUST — SEPTEMBER 2026</span>
+          <span class="roadmap-status upcoming">UPCOMING</span>
+          <span class="roadmap-phase">PHASE 4 · AUTOMATION</span>
+        </div>
+        <div class="roadmap-title">SMART ROUTINES & DCA ENGINE</div>
+        <p class="roadmap-desc">Fully automated asset management layer. DCA scheduling, price-triggered swaps, stop-loss automation, yield compounding, and recurring bridge transfers. No manual intervention required — the wallet works while you sleep.</p>
+        <div class="roadmap-milestones">
+          <span class="milestone">DCA SCHEDULER</span>
+          <span class="milestone">STOP-LOSS ENGINE</span>
+          <span class="milestone">PRICE ALERTS</span>
+          <span class="milestone">AUTO-COMPOUND</span>
+          <span class="milestone">RECURRING BRIDGE</span>
+        </div>
+      </div>
+
+      <div class="roadmap-item upcoming">
+        <div class="roadmap-dot"></div>
+        <div class="roadmap-header">
+          <span class="roadmap-date">OCTOBER — NOVEMBER 2026</span>
+          <span class="roadmap-status upcoming">UPCOMING</span>
+          <span class="roadmap-phase">PHASE 5 · DEVELOPER</span>
+        </div>
+        <div class="roadmap-title">OPEN SDK V2 & DEVELOPER ECOSYSTEM</div>
+        <p class="roadmap-desc">Kinetic SDK v2 with full TypeScript support, React hooks library, Webhook events, REST API v2, and dApp integration kit. Public developer portal, documentation site, and grants program for builders launching on Kinetic.</p>
+        <div class="roadmap-milestones">
+          <span class="milestone">SDK V2 · TYPESCRIPT</span>
+          <span class="milestone">REACT HOOKS</span>
+          <span class="milestone">REST API V2</span>
+          <span class="milestone">DEVELOPER PORTAL</span>
+          <span class="milestone">GRANTS PROGRAM</span>
+          <span class="milestone">DAPP KIT</span>
+        </div>
+      </div>
+
+      <div class="roadmap-item upcoming">
+        <div class="roadmap-dot"></div>
+        <div class="roadmap-header">
+          <span class="roadmap-date">DECEMBER 2026</span>
+          <span class="roadmap-status upcoming">UPCOMING</span>
+          <span class="roadmap-phase">PHASE 6 · SCALE</span>
+        </div>
+        <div class="roadmap-title">MOBILE V1.0 + HARDWARE WALLET FULL SUPPORT</div>
+        <p class="roadmap-desc">Full public release of Kinetic Mobile for iOS and Android. Complete Ledger and Trezor hardware wallet integration. Biometric authentication, WalletConnect v3, and in-app fiat on/off-ramp. Targeting 500K active wallets by end of 2026.</p>
+        <div class="roadmap-milestones">
+          <span class="milestone">iOS V1.0</span>
+          <span class="milestone">ANDROID V1.0</span>
+          <span class="milestone">LEDGER FULL SUPPORT</span>
+          <span class="milestone">TREZOR FULL SUPPORT</span>
+          <span class="milestone">WALLETCONNECT V3</span>
+          <span class="milestone">FIAT ON-RAMP</span>
+          <span class="milestone">500K WALLETS TARGET</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <!-- BIG CTA -->
-<section class="big-cta" id="docs">
+<section class="big-cta">
   <div class="big-cta-content">
     <div class="big-cta-label">★ READY TO LAUNCH</div>
-    <h2 class="big-cta-title">
-      PUT YOUR<br>ASSETS IN<br>MOTION.
-    </h2>
-    <p class="big-cta-sub">
-      START WITH THE APP. ADD AUTOMATION, ANALYTICS, AND CROSS-CHAIN ROUTING AS YOUR PORTFOLIO GROWS.
-    </p>
+    <h2 class="big-cta-title">PUT YOUR<br>ASSETS IN<br>MOTION.</h2>
+    <p class="big-cta-sub">START WITH THE APP. ADD AUTOMATION, ANALYTICS, AND CROSS-CHAIN ROUTING AS YOUR PORTFOLIO GROWS.</p>
     <div class="cta-buttons">
       <a href="#" class="btn-primary">LAUNCH_APP</a>
-      <a href="#" class="btn-ghost">VIEW_GITHUB</a>
-      <a href="#" class="btn-ghost">JOIN_DISCORD</a>
+      <a href="https://github.com/kineticwalletdotfun/koneticwallet" target="_blank" rel="noopener" class="btn-ghost">VIEW_GITHUB</a>
+      <a href="https://x.com/kineticwallet" target="_blank" rel="noopener" class="btn-ghost">FOLLOW_X</a>
+      <a href="https://orynth.dev/projects/kinetic-wallet" target="_blank" rel="noopener" class="orynth-badge">
+        <img src="https://orynth.dev/api/badge/kinetic-wallet?theme=light&style=default" alt="Featured on Orynth" width="180" height="56" style="display:block;" />
+      </a>
     </div>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-left">
-    ⚡ KINETIC WALLET · © 2026 · MIT LICENSE · OPEN SOURCE
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo">⚡ KINETIC<span>WALLET</span></div>
+      <p class="footer-tagline">A NON-CUSTODIAL MULTICHAIN WALLET BUILT FOR SPEED, SECURITY, AND SEAMLESS CROSS-CHAIN SETTLEMENT. OPEN SOURCE. MIT LICENSED. BUILT IN BRUSSELS 🇧🇪</p>
+      <div class="footer-social">
+        <a href="https://x.com/kineticwallet" target="_blank" rel="noopener" class="social-btn">𝕏 TWITTER</a>
+        <a href="https://github.com/kineticwalletdotfun/koneticwallet" target="_blank" rel="noopener" class="social-btn">GITHUB</a>
+        <a href="#" class="social-btn">DISCORD</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">PRODUCT</div>
+      <ul class="footer-col-links">
+        <li><a href="#features">FEATURES</a></li>
+        <li><a href="#how">HOW IT WORKS</a></li>
+        <li><a href="#chains">NETWORKS</a></li>
+        <li><a href="#about">ABOUT</a></li>
+        <li><a href="#team">TEAM</a></li>
+        <li><a href="#roadmap">ROADMAP</a></li>
+        <li><a href="#">LAUNCH APP</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">DEVELOPERS</div>
+      <ul class="footer-col-links">
+        <li><a href="https://github.com/kineticwalletdotfun/koneticwallet" target="_blank" rel="noopener">GITHUB</a></li>
+        <li><a href="#">DOCUMENTATION</a></li>
+        <li><a href="#">SDK REFERENCE</a></li>
+        <li><a href="#">REST API</a></li>
+        <li><a href="#">CHANGELOG</a></li>
+        <li><a href="#">SECURITY POLICY</a></li>
+      </ul>
+      <div style="margin-top:28px;">
+        <a href="https://orynth.dev/projects/kinetic-wallet" target="_blank" rel="noopener">
+          <img src="https://orynth.dev/api/badge/kinetic-wallet?theme=light&style=default" alt="Featured on Orynth" width="160" height="50" style="display:block;opacity:0.7;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'" />
+        </a>
+      </div>
+    </div>
   </div>
-  <ul class="footer-links">
-    <li><a href="#">DOCS</a></li>
-    <li><a href="#">GITHUB</a></li>
-    <li><a href="#">TWITTER</a></li>
-    <li><a href="#">DISCORD</a></li>
-    <li><a href="#">SECURITY</a></li>
-  </ul>
-  <div class="footer-address">
-    <div class="addr-chip"><span>ETH</span><span>0x1a2b...3c4d</span></div>
-    <div class="addr-chip"><span>SOL</span><span>7xKtR...pump</span></div>
+  <div class="footer-bottom">
+    <div class="footer-copy">⚡ KINETIC WALLET · © 2026 · MIT LICENSE · OPEN SOURCE</div>
+    <div class="footer-addresses">
+      <div class="addr-chip"><span>ETH</span><span>0x1a2b...3c4d</span></div>
+      <div class="addr-chip"><span>SOL</span><span>7xKtR...pump</span></div>
+      <div class="addr-chip"><span>BASE</span><span>0x4f2a...e811</span></div>
+    </div>
   </div>
 </footer>
 
 <script>
-  // Subtle parallax on hero title
+  // Parallax on hero title
   document.addEventListener('mousemove', (e) => {
     const x = (e.clientX / window.innerWidth - 0.5) * 12;
     const y = (e.clientY / window.innerHeight - 0.5) * 8;
     const title = document.querySelector('.hero-title');
-    if (title) {
-      title.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
-    }
+    if (title) title.style.transform = `translate(${x*0.3}px,${y*0.3}px)`;
   });
 
-  // Intersection observer for fade-in on scroll
+  // Fade-in on scroll
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.style.opacity = '1';
-        entry.target.style.transform = 'translateY(0)';
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
       }
     });
-  }, { threshold: 0.1 });
+  }, { threshold: 0.08 });
 
-  document.querySelectorAll('.feature-card, .step-item, .chain-card, .stat-item').forEach(el => {
+  document.querySelectorAll(
+    '.feature-card,.step-item,.chain-card,.stat-item,.about-belief,.about-quote,.team-card,.roadmap-item'
+  ).forEach(el => {
     el.style.opacity = '0';
-    el.style.transform = 'translateY(16px)';
-    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    el.style.transform = 'translateY(18px)';
+    el.style.transition = 'opacity 0.55s ease, transform 0.55s ease';
     observer.observe(el);
   });
 
-  // Animated counter for stats
-  const animateCounter = (el, target, suffix) => {
-    let start = 0;
-    const duration = 1800;
-    const startTime = performance.now();
-    const update = (currentTime) => {
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      const current = start + (target - start) * eased;
-      el.textContent = current.toFixed(target % 1 !== 0 ? 1 : 0) + suffix;
-      if (progress < 1) requestAnimationFrame(update);
-    };
-    requestAnimationFrame(update);
-  };
-
-  const statsObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const values = entry.target.querySelectorAll('.stat-value');
-        values.forEach(v => {
-          const text = v.textContent;
-          const num = parseFloat(text.replace(/[^0-9.]/g, ''));
-          const suffix = text.replace(/[0-9.]/g, '');
-          if (!isNaN(num)) {
-            v.innerHTML = `<span class="count">${num}</span><span>${suffix.includes('$') ? '' : suffix.replace(/^\$/, '')}</span>`;
-          }
-        });
-        statsObserver.unobserve(entry.target);
-      }
+  // Active nav highlight on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 120) current = s.id;
     });
-  }, { threshold: 0.5 });
-
-  document.querySelector('.stats-row') && statsObserver.observe(document.querySelector('.stats-row'));
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#'+current ? 'var(--accent)' : '';
+    });
+  }, { passive: true });
 </script>
 </body>
 </html>
