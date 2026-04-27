@@ -2,7 +2,7 @@
 
 > **Non-custodial. Multichain. Sub-2-second settlement.**
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-c8ff00.svg)](./LICENSE)
+[![License: MIT]
 [![Testnet: Live](https://img.shields.io/badge/Testnet-Live-00ffc8.svg)](#testnet-addresses)
 [![CI](https://github.com/kineticwalletdotfun/koneticwallet/actions/workflows/ci.yml/badge.svg)](https://github.com/kineticwalletdotfun/koneticwallet/actions)
 [![Featured on Orynth](https://orynth.dev/api/badge/kinetic-wallet?theme=light&style=default)](https://orynth.dev/projects/kinetic-wallet)
