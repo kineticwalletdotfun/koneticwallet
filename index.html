@@ -281,6 +281,174 @@
     .roadmap-container { padding: 40px 20px !important; }
     .big-cta { padding: 80px 20px; }
   }
+
+  /* ── HAMBURGER NAV ── */
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+    background: none;
+    border: none;
+  }
+  .nav-hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--fg);
+    transition: all 0.25s;
+  }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .nav-mobile-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    top: 57px;
+    background: rgba(10,10,10,0.98);
+    backdrop-filter: blur(18px);
+    z-index: 98;
+    flex-direction: column;
+    padding: 48px 28px;
+    gap: 0;
+    border-top: 1px solid var(--border);
+    overflow-y: auto;
+  }
+  .nav-mobile-overlay.open { display: flex; }
+  .nav-mobile-overlay a {
+    display: block;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--fg);
+    text-decoration: none;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--border);
+    transition: color 0.2s;
+  }
+  .nav-mobile-overlay a:hover { color: var(--accent); }
+  .nav-mobile-overlay a.accent { color: var(--accent); }
+  .nav-mobile-cta {
+    margin-top: 32px;
+    background: var(--accent);
+    color: #000 !important;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px !important;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    padding: 16px 0 !important;
+    text-align: center;
+    border: none !important;
+  }
+
+  /* ── TWO-COL GRID CLASS ── */
+  .two-col-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* ── EXTENDED MOBILE BREAKPOINT ── */
+  @media (max-width: 768px) {
+    nav { padding: 14px 20px; }
+    .nav-links { display: none; }
+    .nav-hamburger { display: flex; }
+    .nav-cta { display: none; }
+
+    /* Hero */
+    .hero {
+      grid-template-columns: 1fr;
+      padding: 130px 20px 48px;
+      gap: 0;
+    }
+    .hero-left { border-right: none; padding-right: 0; }
+    .hero-right { padding-left: 0; padding-top: 32px; }
+    .hero-title {
+      font-size: clamp(36px, 11vw, 64px) !important;
+      margin-bottom: 28px;
+    }
+    .hero-desc { font-size: 11px; margin-bottom: 32px; }
+    .hero-actions { flex-direction: column; align-items: stretch; gap: 10px; }
+    .hero-actions a { text-align: center; padding: 14px 20px; }
+
+    /* Terminal */
+    .terminal { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .terminal-body { min-width: 480px; }
+
+    /* Stats */
+    .stats-row { grid-template-columns: 1fr 1fr; }
+    .stat-item { padding: 20px 16px; }
+    .stat-value { font-size: clamp(28px, 8vw, 48px) !important; }
+
+    /* GitHub live section */
+    .two-col-grid { grid-template-columns: 1fr !important; }
+    .two-col-grid > div:first-child {
+      padding: 36px 20px !important;
+      border-right: none !important;
+      border-bottom: 1px solid var(--border);
+    }
+    .two-col-grid > div:last-child { padding: 28px 20px !important; }
+
+    /* Features */
+    .features-grid { grid-template-columns: 1fr !important; }
+    .feature-card { border-right: none !important; }
+
+    /* How it works */
+    .how-grid { grid-template-columns: 1fr !important; }
+    .how-left { border-right: none !important; }
+    .how-left, .how-right { padding: 32px 20px !important; }
+
+    /* Chains */
+    .chains-section { grid-template-columns: 1fr !important; padding: 20px !important; }
+
+    /* About */
+    .about-grid { grid-template-columns: 1fr !important; }
+    .about-left { border-right: none !important; }
+    .about-left, .about-right { padding: 32px 20px !important; }
+
+    /* Section headers */
+    .section-header { padding: 40px 20px !important; }
+
+    /* Team */
+    .team-grid { grid-template-columns: 1fr 1fr !important; }
+    .team-card { border-right: 1px solid var(--border) !important; }
+    .team-card:nth-child(2n) { border-right: none !important; }
+
+    /* Roadmap */
+    .roadmap-container { padding: 32px 20px !important; }
+    .roadmap-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+
+    /* Big CTA */
+    .big-cta { padding: 72px 20px !important; }
+    .big-cta-title { font-size: clamp(28px, 9vw, 52px) !important; }
+    .cta-buttons { flex-direction: column; align-items: stretch; }
+    .cta-buttons a { text-align: center; }
+
+    /* Footer */
+    .footer-top { grid-template-columns: 1fr !important; padding: 32px 20px !important; gap: 32px !important; }
+    .footer-bottom {
+      padding: 16px 20px !important;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .footer-addresses { flex-wrap: wrap; gap: 8px; }
+    .addr-chip span:last-child { font-size: 9px; max-width: 100px; overflow: hidden; text-overflow: ellipsis; }
+    .footer-social { flex-wrap: wrap; gap: 8px; }
+
+    /* Buttons full width on mobile */
+    .btn-primary, .btn-ghost { width: 100%; text-align: center; display: block; }
+  }
+
+  @media (max-width: 480px) {
+    .stats-row { grid-template-columns: 1fr 1fr; }
+    .team-grid { grid-template-columns: 1fr !important; }
+    .team-card { border-right: none !important; }
+    .hero-title { font-size: clamp(32px, 10vw, 52px) !important; }
+  }
+
 </style>
 </head>
 <body>
@@ -299,8 +467,24 @@
     <li><a href="#roadmap">ROADMAP</a></li>
     <li><a href="https://github.com/kineticwalletdotfun/koneticwallet" target="_blank" rel="noopener" style="color:var(--accent)!important;">GITHUB ★</a></li>
   </ul>
+  <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
   <a href="#" class="nav-cta">LAUNCH_APP</a>
 </nav>
+
+<!-- MOBILE NAV OVERLAY -->
+<div class="nav-mobile-overlay" id="mobileNav">
+  <a href="#features">FEATURES</a>
+  <a href="#how">HOW IT WORKS</a>
+  <a href="#chains">NETWORKS</a>
+  <a href="#about">ABOUT</a>
+  <a href="#team">TEAM</a>
+  <a href="#roadmap">ROADMAP</a>
+  <a href="https://github.com/kineticwalletdotfun/koneticwallet" target="_blank" rel="noopener" class="accent">GITHUB ★</a>
+  <a href="https://x.com/NodeCertic" target="_blank" rel="noopener" class="accent">𝕏 FOLLOW @NodeCertic</a>
+  <a href="#" class="nav-mobile-cta">LAUNCH_APP ↗</a>
+</div>
 
 <!-- TICKER -->
 <div class="ticker">
@@ -402,7 +586,7 @@
 
 <!-- GITHUB LIVE BANNER -->
 <section id="github-live" style="border-bottom:1px solid var(--border);background:#050505;">
-  <div style="display:grid;grid-template-columns:1fr 1fr;">
+  <div class="two-col-grid">
     <div style="padding:56px 48px;border-right:1px solid var(--border);">
       <div style="font-size:10px;letter-spacing:0.35em;color:var(--accent);margin-bottom:20px;display:flex;align-items:center;gap:10px;">
         <span style="width:8px;height:8px;border-radius:50%;background:var(--accent);display:inline-block;animation:pulse 1.5s ease infinite;"></span>
@@ -1007,6 +1191,26 @@
       a.style.color = a.getAttribute('href') === '#'+current ? 'var(--accent)' : '';
     });
   }, { passive: true });
+
+  // Hamburger menu
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobileNav');
+  if (hamburger && mobileNav) {
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileNav.classList.toggle('open');
+      document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
+    });
+    // Close on link click
+    mobileNav.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        mobileNav.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    });
+  }
+
 </script>
 </body>
 </html>
