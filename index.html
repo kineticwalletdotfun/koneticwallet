@@ -183,21 +183,6 @@
   .about-quote p { font-size: 12px; color: var(--fg); line-height: 1.9; padding-top: 24px; font-style: italic; }
   .about-quote cite { display: block; margin-top: 16px; font-size: 10px; color: var(--mid); letter-spacing: 0.2em; font-style: normal; }
 
-  /* TEAM */
-  .team-grid { display: grid; grid-template-columns: repeat(4,1fr); }
-  .team-card { padding: 40px 32px; border-right: 1px solid var(--border); transition: background 0.2s; position: relative; overflow: hidden; }
-  .team-card:nth-child(4n) { border-right: none; }
-  .team-card:nth-child(n+5) { border-top: 1px solid var(--border); }
-  .team-card:hover { background: var(--card); }
-  .team-card:hover .team-avatar { border-color: var(--accent); }
-  .team-avatar { width: 72px; height: 72px; border: 1px solid var(--muted); display: flex; align-items: center; justify-content: center; font-size: 28px; margin-bottom: 24px; transition: border-color 0.2s; background: var(--bg); }
-  .team-name { font-size: 14px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; line-height: 1.3; }
-  .team-role { font-size: 10px; letter-spacing: 0.2em; color: var(--accent); margin-bottom: 16px; }
-  .team-bio { font-size: 11px; color: var(--mid); line-height: 1.7; margin-bottom: 20px; }
-  .team-links { display: flex; gap: 10px; }
-  .team-link { font-size: 9px; letter-spacing: 0.15em; color: var(--muted); border: 1px solid var(--border); padding: 4px 10px; text-decoration: none; transition: all 0.2s; }
-  .team-link:hover { color: var(--accent); border-color: var(--accent); }
-  .team-bg-num { position: absolute; bottom: -20px; right: -8px; font-size: 100px; font-weight: 700; color: var(--border); line-height: 1; pointer-events: none; user-select: none; }
 
   /* ROADMAP */
   .roadmap-container { padding: 64px 48px; }
@@ -272,10 +257,7 @@
     .how-grid, .about-grid { grid-template-columns: 1fr; }
     .how-left, .about-left { border-right: none; }
     .chains-section { grid-template-columns: 1fr; padding: 20px; }
-    .section-header, .how-left, .how-right, .about-left, .about-right { padding: 40px 20px; }
-    .team-grid { grid-template-columns: 1fr 1fr !important; }
-    .team-card { border-right: 1px solid var(--border) !important; }
-    .team-card:nth-child(2n) { border-right: none !important; }
+    .section-header, .how-left, .how-right, .about-left, .about-right { padding: 40px 20px; }}
     .footer-top { grid-template-columns: 1fr; padding: 32px 20px; gap: 32px; }
     .footer-bottom { padding: 16px 20px; flex-direction: column; align-items: flex-start; }
     .roadmap-container { padding: 40px 20px !important; }
@@ -411,10 +393,7 @@
     /* Section headers */
     .section-header { padding: 40px 20px !important; }
 
-    /* Team */
-    .team-grid { grid-template-columns: 1fr 1fr !important; }
-    .team-card { border-right: 1px solid var(--border) !important; }
-    .team-card:nth-child(2n) { border-right: none !important; }
+    /* Team */}
 
     /* Roadmap */
     .roadmap-container { padding: 32px 20px !important; }
@@ -443,9 +422,7 @@
   }
 
   @media (max-width: 480px) {
-    .stats-row { grid-template-columns: 1fr 1fr; }
-    .team-grid { grid-template-columns: 1fr !important; }
-    .team-card { border-right: none !important; }
+    .stats-row { grid-template-columns: 1fr 1fr; }}
     .hero-title { font-size: clamp(32px, 10vw, 52px) !important; }
   }
 
@@ -668,9 +645,7 @@
   @media (max-width: 480px) {
     .t-line, .t-output { font-size: 9px; }
     .hero-title { font-size: 32px !important; }
-    .stats-row { grid-template-columns: 1fr 1fr; }
-    .team-grid { grid-template-columns: 1fr !important; }
-  }
+    .stats-row { grid-template-columns: 1fr 1fr; }}
 
 </style>
 </head>
@@ -686,8 +661,7 @@
     <li><a href="#how">HOW IT WORKS</a></li>
     <li><a href="#chains">NETWORKS</a></li>
     <li><a href="#about">ABOUT</a></li>
-    <li><a href="#team">TEAM</a></li>
-    <li><a href="#roadmap">ROADMAP</a></li>
+        <li><a href="#roadmap">ROADMAP</a></li>
     <li><a href="https://github.com/kineticwalletdotfun/koneticwallet" target="_blank" rel="noopener" style="color:var(--accent)!important;">GITHUB ★</a></li>
   </ul>
   <button class="nav-hamburger" id="hamburger" aria-label="Menu">
@@ -702,8 +676,7 @@
   <a href="#how">HOW IT WORKS</a>
   <a href="#chains">NETWORKS</a>
   <a href="#about">ABOUT</a>
-  <a href="#team">TEAM</a>
-  <a href="#roadmap">ROADMAP</a>
+    <a href="#roadmap">ROADMAP</a>
   <a href="https://github.com/kineticwalletdotfun/koneticwallet" target="_blank" rel="noopener" class="accent">GITHUB ★</a>
   <a href="https://x.com/NodeCertic" target="_blank" rel="noopener" class="accent">𝕏 FOLLOW @NodeCertic</a>
   <a href="#" class="nav-mobile-cta">LAUNCH_APP ↗</a>
@@ -1111,103 +1084,6 @@
   </div>
 </section>
 
-<!-- TEAM -->
-<section id="team">
-  <div class="section-header">
-    <span class="section-label">THE_TEAM</span>
-    <span class="section-num">05 / 06</span>
-  </div>
-  <div class="team-grid">
-    <div class="team-card">
-      <div class="team-bg-num">01</div>
-      <div class="team-avatar">🧠</div>
-      <div class="team-name">MATHIEU<br>VANDENBERGHE</div>
-      <div class="team-role">FOUNDER & CEO</div>
-      <p class="team-bio">FORMER QUANT AT KBC GROUP. BUILT HIGH-FREQUENCY SETTLEMENT SYSTEMS FOR EURONEXT BEFORE GOING ALL-IN ON DECENTRALIZED INFRASTRUCTURE IN 2021.</p>
-      <div class="team-links">
-        <a href="https://x.com/wxbitwhale" target="_blank" rel="noopener" class="team-link">𝕏 @wxbitwhale</a>
-        <a href="https://github.com/kineticwalletdotfun/koneticwallet" target="_blank" rel="noopener" class="team-link">GITHUB</a>
-      </div>
-    </div>
-    <div class="team-card">
-      <div class="team-bg-num">02</div>
-      <div class="team-avatar">⚡</div>
-      <div class="team-name">ELISE<br>DEWAELE</div>
-      <div class="team-role">CTO & CO-FOUNDER</div>
-      <p class="team-bio">EX-IMEC RESEARCHER IN CRYPTOGRAPHIC PROTOCOLS. DESIGNED THE CORE ROUTING ENGINE AND NON-CUSTODIAL KEY ARCHITECTURE POWERING KINETIC.</p>
-      <div class="team-links">
-        <a href="https://x.com/NodeCertic" target="_blank" rel="noopener" class="team-link">𝕏</a>
-        <a href="https://github.com/kineticwalletdotfun/koneticwallet" target="_blank" rel="noopener" class="team-link">GITHUB</a>
-      </div>
-    </div>
-    <div class="team-card">
-      <div class="team-bg-num">03</div>
-      <div class="team-avatar">🔗</div>
-      <div class="team-name">NICOLAS<br>CLAES</div>
-      <div class="team-role">HEAD OF PROTOCOL</div>
-      <p class="team-bio">PREVIOUSLY CORE CONTRIBUTOR AT GNOSIS CHAIN. BUILT THE CROSS-CHAIN BRIDGE MODULE AND MULTICHAIN SETTLEMENT LAYER FROM THE GROUND UP.</p>
-      <div class="team-links">
-        <a href="https://x.com/NodeCertic" target="_blank" rel="noopener" class="team-link">𝕏</a>
-        <a href="https://github.com/kineticwalletdotfun/koneticwallet" target="_blank" rel="noopener" class="team-link">GITHUB</a>
-      </div>
-    </div>
-    <div class="team-card">
-      <div class="team-bg-num">04</div>
-      <div class="team-avatar">🎨</div>
-      <div class="team-name">AMÉLIE<br>LECOMTE</div>
-      <div class="team-role">DESIGN LEAD</div>
-      <p class="team-bio">AWARD-WINNING PRODUCT DESIGNER FROM BRUSSELS. OBSESSED WITH REMOVING FRICTION FROM COMPLEX FINANCIAL INTERFACES. PREVIOUSLY AT BELFIUS DIGITAL.</p>
-      <div class="team-links">
-        <a href="https://x.com/NodeCertic" target="_blank" rel="noopener" class="team-link">𝕏</a>
-        <a href="https://github.com/kineticwalletdotfun/koneticwallet" target="_blank" rel="noopener" class="team-link">GITHUB</a>
-      </div>
-    </div>
-    <div class="team-card">
-      <div class="team-bg-num">05</div>
-      <div class="team-avatar">🔐</div>
-      <div class="team-name">PIETER<br>DESMET</div>
-      <div class="team-role">HEAD OF SECURITY</div>
-      <p class="team-bio">CERTIFIED ETHICAL HACKER AND BLOCKCHAIN AUDITOR. FORMER SECURITY LEAD AT SWIFT BRUSSELS. OVERSEES ALL PROTOCOL AUDITS AND KEY MANAGEMENT SYSTEMS.</p>
-      <div class="team-links">
-        <a href="https://x.com/NodeCertic" target="_blank" rel="noopener" class="team-link">𝕏</a>
-        <a href="https://github.com/kineticwalletdotfun/koneticwallet" target="_blank" rel="noopener" class="team-link">GITHUB</a>
-      </div>
-    </div>
-    <div class="team-card">
-      <div class="team-bg-num">06</div>
-      <div class="team-avatar">📊</div>
-      <div class="team-name">FLORENCE<br>BUYSSE</div>
-      <div class="team-role">HEAD OF GROWTH</div>
-      <p class="team-bio">GROWTH STRATEGIST WITH A DECADE IN FINTECH ACROSS BENELUX. SCALED TWO CRYPTO STARTUPS FROM ZERO TO 100K USERS. DRIVES KINETIC'S GO-TO-MARKET.</p>
-      <div class="team-links">
-        <a href="https://x.com/NodeCertic" target="_blank" rel="noopener" class="team-link">𝕏</a>
-        <a href="https://github.com/kineticwalletdotfun/koneticwallet" target="_blank" rel="noopener" class="team-link">GITHUB</a>
-      </div>
-    </div>
-    <div class="team-card">
-      <div class="team-bg-num">07</div>
-      <div class="team-avatar">⚙️</div>
-      <div class="team-name">THOMAS<br>WILLEMS</div>
-      <div class="team-role">SENIOR ENGINEER</div>
-      <p class="team-bio">FULL-STACK WEB3 ENGINEER SPECIALIZING IN SOLIDITY AND RUST. PREVIOUSLY BUILT DEFI PRIMITIVES AT HARVEST FINANCE. LEADS SDK AND API DEVELOPMENT.</p>
-      <div class="team-links">
-        <a href="https://x.com/NodeCertic" target="_blank" rel="noopener" class="team-link">𝕏</a>
-        <a href="https://github.com/kineticwalletdotfun/koneticwallet" target="_blank" rel="noopener" class="team-link">GITHUB</a>
-      </div>
-    </div>
-    <div class="team-card">
-      <div class="team-bg-num">08</div>
-      <div class="team-avatar">🌐</div>
-      <div class="team-name">SARA<br>NIJS</div>
-      <div class="team-role">COMMUNITY LEAD</div>
-      <p class="team-bio">COMMUNITY BUILDER AND WEB3 ADVOCATE FROM GHENT. RUNS THE KINETIC DEVELOPER ECOSYSTEM, DISCORD, AND AMBASSADOR PROGRAM ACROSS 40+ COUNTRIES.</p>
-      <div class="team-links">
-        <a href="https://x.com/NodeCertic" target="_blank" rel="noopener" class="team-link">𝕏</a>
-        <a href="https://github.com/kineticwalletdotfun/koneticwallet" target="_blank" rel="noopener" class="team-link">GITHUB</a>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- ROADMAP -->
 <section id="roadmap">
@@ -1373,8 +1249,7 @@
         <li><a href="#how">HOW IT WORKS</a></li>
         <li><a href="#chains">NETWORKS</a></li>
         <li><a href="#about">ABOUT</a></li>
-        <li><a href="#team">TEAM</a></li>
-        <li><a href="#roadmap">ROADMAP</a></li>
+                <li><a href="#roadmap">ROADMAP</a></li>
         <li><a href="#">LAUNCH APP</a></li>
       </ul>
     </div>
@@ -1424,7 +1299,7 @@
   }, { threshold: 0.08 });
 
   document.querySelectorAll(
-    '.feature-card,.step-item,.chain-card,.stat-item,.about-belief,.about-quote,.team-card,.roadmap-item'
+    '.feature-card,.step-item,.chain-card,.stat-item,.about-belief,.about-quote,.roadmap-item'
   ).forEach(el => {
     el.style.opacity = '0';
     el.style.transform = 'translateY(18px)';
