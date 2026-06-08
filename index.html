@@ -47,10 +47,10 @@
   /* NAV */
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    padding: 18px 48px;
+    padding: 16px 48px;
     display: flex; align-items: center; justify-content: space-between;
     border-bottom: 1px solid var(--border);
-    background: rgba(10,10,10,0.94); backdrop-filter: blur(14px);
+    background: rgba(10,10,10,0.96); backdrop-filter: blur(14px);
   }
   .nav-logo { font-size: 13px; font-weight: 700; letter-spacing: 0.2em; color: var(--fg); text-decoration: none; }
   .nav-logo span { color: var(--accent); }
@@ -59,6 +59,83 @@
   .nav-links a:hover { color: var(--accent); }
   .nav-cta { background: var(--accent); color: #000; padding: 8px 20px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.15em; border: none; cursor: pointer; transition: all 0.15s; text-decoration: none; display: inline-block; }
   .nav-cta:hover { background: #fff; }
+
+  /* HAMBURGER */
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 6px;
+    background: none;
+    border: none;
+    z-index: 102;
+  }
+  .nav-hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--fg);
+    transition: all 0.25s;
+  }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* MOBILE OVERLAY */
+  .nav-mobile-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(10,10,10,0.99);
+    backdrop-filter: blur(20px);
+    z-index: 101;
+    flex-direction: column;
+    padding: 100px 28px 40px;
+    overflow-y: auto;
+  }
+  .nav-mobile-overlay.open { display: flex; }
+  .nav-mobile-overlay a {
+    display: block;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--fg);
+    text-decoration: none;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+    transition: color 0.2s;
+    text-transform: uppercase;
+  }
+  .nav-mobile-overlay a:hover, .nav-mobile-overlay a:active { color: var(--accent); }
+  .nav-mobile-overlay a.accent { color: var(--accent2); }
+  .nav-mobile-cta {
+    margin-top: 28px;
+    background: var(--accent) !important;
+    color: #000 !important;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.2em !important;
+    padding: 16px 0 !important;
+    text-align: center;
+    border: none !important;
+    border-bottom: none !important;
+  }
+  .nav-mobile-cta:hover { background: #fff !important; color: #000 !important; }
+
+  @media (max-width: 960px) {
+    nav { padding: 14px 24px; }
+    .nav-links { display: none; }
+    .nav-hamburger { display: flex; }
+    .nav-cta { display: none; }
+  }
+  @media (max-width: 480px) {
+    nav { padding: 12px 16px; }
+  }
 
   /* TICKER */
   .ticker {
@@ -245,8 +322,6 @@
 
   /* MOBILE */
   @media (max-width: 960px) {
-    nav { padding: 14px 20px; }
-    .nav-links { display: none; }
     .hero { grid-template-columns: 1fr; padding: 48px 20px 48px; }
     .hero-left { border-right: none; padding-right: 0; }
     .hero-right { padding-left: 0; padding-top: 40px; }
@@ -264,68 +339,6 @@
     .big-cta { padding: 80px 20px; }
   }
 
-  /* ── HAMBURGER NAV ── */
-  .nav-hamburger {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    cursor: pointer;
-    padding: 4px;
-    background: none;
-    border: none;
-  }
-  .nav-hamburger span {
-    display: block;
-    width: 22px;
-    height: 2px;
-    background: var(--fg);
-    transition: all 0.25s;
-  }
-  .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
-  .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-  .nav-mobile-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    top: 57px;
-    background: rgba(10,10,10,0.98);
-    backdrop-filter: blur(18px);
-    z-index: 98;
-    flex-direction: column;
-    padding: 48px 28px;
-    gap: 0;
-    border-top: 1px solid var(--border);
-    overflow-y: auto;
-  }
-  .nav-mobile-overlay.open { display: flex; }
-  .nav-mobile-overlay a {
-    display: block;
-    font-size: 22px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    color: var(--fg);
-    text-decoration: none;
-    padding: 18px 0;
-    border-bottom: 1px solid var(--border);
-    transition: color 0.2s;
-  }
-  .nav-mobile-overlay a:hover { color: var(--accent); }
-  .nav-mobile-overlay a.accent { color: var(--accent); }
-  .nav-mobile-cta {
-    margin-top: 32px;
-    background: var(--accent);
-    color: #000 !important;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 13px !important;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    padding: 16px 0 !important;
-    text-align: center;
-    border: none !important;
-  }
-
   /* ── TWO-COL GRID CLASS ── */
   .two-col-grid {
     display: grid;
@@ -334,10 +347,6 @@
 
   /* ── EXTENDED MOBILE BREAKPOINT ── */
   @media (max-width: 768px) {
-    nav { padding: 14px 20px; }
-    .nav-links { display: none; }
-    .nav-hamburger { display: flex; }
-    .nav-cta { display: none; }
 
     /* Hero */
     .hero {
@@ -638,9 +647,6 @@
     /* Ticker */
     .ticker { font-size: 9px; }
     /* Nav */
-    nav {
-      padding: 12px 16px !important;
-    }
   }
   @media (max-width: 480px) {
     .t-line, .t-output { font-size: 9px; }
@@ -661,25 +667,24 @@
     <li><a href="#how">HOW IT WORKS</a></li>
     <li><a href="#chains">NETWORKS</a></li>
     <li><a href="#about">ABOUT</a></li>
-        <li><a href="#roadmap">ROADMAP</a></li>
+    <li><a href="#roadmap">ROADMAP</a></li>
     <li><a href="https://github.com/kineticwalletdotfun/koneticwallet" target="_blank" rel="noopener" style="color:var(--accent)!important;">GITHUB ★</a></li>
   </ul>
-  <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+  <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
     <span></span><span></span><span></span>
   </button>
-  <a href="#" class="nav-cta">LAUNCH_APP</a>
 </nav>
 
 <!-- MOBILE NAV OVERLAY -->
 <div class="nav-mobile-overlay" id="mobileNav">
-  <a href="#features">FEATURES</a>
-  <a href="#how">HOW IT WORKS</a>
-  <a href="#chains">NETWORKS</a>
-  <a href="#about">ABOUT</a>
-    <a href="#roadmap">ROADMAP</a>
-  <a href="https://github.com/kineticwalletdotfun/koneticwallet" target="_blank" rel="noopener" class="accent">GITHUB ★</a>
-  <a href="https://x.com/NodeCertic" target="_blank" rel="noopener" class="accent">𝕏 FOLLOW @NodeCertic</a>
-  <a href="#" class="nav-mobile-cta">LAUNCH_APP ↗</a>
+  <a href="#features" class="nav-overlay-link">Features</a>
+  <a href="#how" class="nav-overlay-link">How It Works</a>
+  <a href="#chains" class="nav-overlay-link">Networks</a>
+  <a href="#about" class="nav-overlay-link">About</a>
+  <a href="#roadmap" class="nav-overlay-link">Roadmap</a>
+  <a href="https://github.com/kineticwalletdotfun/koneticwallet" target="_blank" rel="noopener" class="accent">GitHub ★</a>
+  <a href="https://x.com/NodeCertic" target="_blank" rel="noopener" class="accent">𝕏 @NodeCertic</a>
+  <a href="#" class="nav-mobile-cta">LAUNCH APP ↗</a>
 </div>
 
 <!-- TICKER -->
