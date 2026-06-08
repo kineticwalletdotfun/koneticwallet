@@ -76,7 +76,7 @@
   @keyframes scan { 0%{top:-2px} 100%{top:100vh} }
 
   /* HERO */
-  .hero { min-height: 100vh; padding: 160px 48px 80px; display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--border); }
+  .hero { min-height: 100vh; padding: 72px 48px 80px; display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--border); }
   .hero-left { padding-right: 48px; border-right: 1px solid var(--border); display: flex; flex-direction: column; justify-content: center; }
   .hero-tag { font-size: 10px; letter-spacing: 0.3em; color: var(--accent); margin-bottom: 32px; display: flex; align-items: center; gap: 12px; }
   .hero-tag::before { content:''; width:24px; height:1px; background:var(--accent); display:inline-block; }
@@ -262,7 +262,7 @@
   @media (max-width: 960px) {
     nav { padding: 14px 20px; }
     .nav-links { display: none; }
-    .hero { grid-template-columns: 1fr; padding: 140px 20px 60px; }
+    .hero { grid-template-columns: 1fr; padding: 48px 20px 48px; }
     .hero-left { border-right: none; padding-right: 0; }
     .hero-right { padding-left: 0; padding-top: 40px; }
     .stats-row { grid-template-columns: 1fr 1fr; }
@@ -360,7 +360,7 @@
     /* Hero */
     .hero {
       grid-template-columns: 1fr;
-      padding: 130px 20px 48px;
+      padding: 40px 20px 40px;
       gap: 0;
     }
     .hero-left { border-right: none; padding-right: 0; }
@@ -451,11 +451,13 @@
 
 
   /* ── EASYA LAUNCHING SOON BANNER ── */
+  /* Nav is fixed ~57px, Ticker fixed from top:57px ~24px tall = 81px total fixed height */
   .easya-banner {
     background: #050505;
     border-bottom: 1px solid var(--border);
     padding: 0;
     overflow: hidden;
+    margin-top: 81px; /* clear fixed nav + ticker */
   }
   .easya-inner {
     display: flex;
@@ -648,7 +650,10 @@
     }
     /* EasyA */
     .easya-inner {
-      padding: 28px 16px !important;
+      padding: 28px 16px 28px !important;
+    }
+    .easya-banner {
+      margin-top: 81px; /* keep clearing fixed header on mobile */
     }
     .easya-heading {
       font-size: clamp(20px, 6vw, 28px) !important;
