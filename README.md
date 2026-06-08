@@ -5,7 +5,7 @@
 ![Version](https://img.shields.io/badge/version-v1.0.0--testnet-c8ff00?style=flat-square&labelColor=000)
 ![License](https://img.shields.io/badge/license-MIT-c8ff00?style=flat-square&labelColor=000)
 ![Status](https://img.shields.io/badge/status-testnet%20live-00ffc8?style=flat-square&labelColor=000)
-![Built by](https://img.shields.io/badge/built%20by-%40otakucompassai-c8ff00?style=flat-square&labelColor=000)
+![Built by](https://img.shields.io/badge/built%20by-%40NodeCertic-c8ff00?style=flat-square&labelColor=000)
 
 ---
 
@@ -87,6 +87,12 @@ npm run deploy:testnet
 
 ---
 
+## FOUNDER
+
+- 𝕏 — [@NodeCertic](https://x.com/NodeCertic)
+
+---
+
 ## CONTRIBUTING
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
@@ -108,9 +114,9 @@ MIT © 2026 Kinetic Wallet — Open Source, Built in Brussels 🇧🇪
 ## LINKS
 
 - 🌐 Website — [kineticwallet.fun](https://kineticwallet.fun)
-- 𝕏 Twitter — [@otakucompassai](https://x.com/otakucompassai)
+- 𝕏 Twitter — [@NodeCertic](https://x.com/NodeCertic)
 - 💻 GitHub — [kineticwalletdotfun](https://github.com/kineticwalletdotfun/koneticwallet)
 
 ---
 
-*Built by [@otakucompassai](https://x.com/otakucompassai)*
+*Built by [@NodeCertic](https://x.com/NodeCertic)*
